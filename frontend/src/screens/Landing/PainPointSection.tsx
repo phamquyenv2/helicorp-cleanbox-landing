@@ -23,26 +23,23 @@ export default function PainPointSection({ isDark }: PainPointSectionProps) {
           {PAIN_POINTS.map((point, index) => (
             <div
               key={index}
-              className={`reveal group relative p-8 rounded-3xl border transition-all duration-300 hover:-translate-y-2 hover:shadow-xl ${
+              className={`reveal group relative p-8 rounded-2xl border transition-all duration-300 hover:shadow-md ${
                 isDark
-                  ? 'bg-[#172033] border-white/10 hover:border-orange-500/30 hover:shadow-orange-500/10'
-                  : 'bg-white border-gray-100 hover:border-orange-500/30 hover:shadow-orange-500/10'
+                  ? 'bg-[#1e293b]/50 border-white/5 hover:border-white/10'
+                  : 'bg-white border-gray-200 hover:border-gray-300'
               }`}
             >
-              {/* Emoji */}
-              <div className="text-5xl mb-5 group-hover:scale-110 transition-transform">
-                {point.emoji}
+              <div className="flex justify-between items-start mb-6">
+                <h3 className={`text-lg font-bold pr-8 ${isDark ? 'text-white' : 'text-gray-900'}`}>
+                  {point.title}
+                </h3>
+                <span className={`text-2xl font-black font-mono opacity-20 ${isDark ? 'text-white' : 'text-gray-900'}`}>
+                  0{index + 1}
+                </span>
               </div>
-              {/* Title */}
-              <h3 className={`text-xl font-bold mb-3 ${isDark ? 'text-white' : 'text-[#172033]'}`}>
-                {point.title}
-              </h3>
-              {/* Description */}
-              <p className={`text-sm leading-relaxed ${isDark ? 'text-gray-400' : 'text-gray-600'}`}>
+              <p className={`text-sm leading-relaxed ${isDark ? 'text-gray-400' : 'text-gray-500'}`}>
                 {point.description}
               </p>
-              {/* Decorative gradient line */}
-              <div className="absolute bottom-0 left-8 right-8 h-1 bg-gradient-to-r from-transparent via-orange-400/50 to-transparent rounded-full opacity-0 group-hover:opacity-100 transition-opacity" />
             </div>
           ))}
         </div>

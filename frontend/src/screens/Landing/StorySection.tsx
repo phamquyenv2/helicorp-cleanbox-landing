@@ -24,19 +24,19 @@ export default function StorySection({ isDark }: StorySectionProps) {
             {STORY_STEPS.map((step, i) => {
               const Icon = storyIcons[step.icon] || Cat;
               return (
-                <div key={i} className="reveal relative pl-16 md:pl-20">
+                <div key={i} className="reveal relative pl-16 md:pl-24">
                   {/* Timeline dot */}
-                  <div className={`absolute left-3.5 md:left-5.5 top-1 w-5 h-5 rounded-full border-4 z-10 ${isDark ? 'bg-[#ff7a1a] border-[#101827]' : 'bg-[#ff7a1a] border-[#fff8f1]'}`} />
+                  <div className={`absolute left-4 md:left-6 top-1.5 w-4 h-4 rounded-full border-[3px] z-10 ${isDark ? 'bg-[#ff7a1a] border-[#0d1321]' : 'bg-[#ff7a1a] border-[#fff8f1]'}`} />
                   
-                  <div className={`p-6 rounded-2xl border transition-all duration-300 hover:-translate-y-1 hover:shadow-lg ${isDark ? 'bg-[#172033] border-white/10' : 'bg-white border-gray-100 shadow-sm'}`}>
-                    <div className="flex items-center gap-3 mb-3">
-                      <div className={`w-10 h-10 rounded-xl flex items-center justify-center ${isDark ? 'bg-[#ff7a1a]/15' : 'bg-[#ff7a1a]/10'}`}>
-                        <Icon size={18} className="text-[#ff7a1a]" />
+                  <div className={`p-6 sm:p-8 rounded-2xl border transition-all duration-300 hover:shadow-md ${isDark ? 'bg-[#1e293b]/50 border-white/5 hover:border-white/10' : 'bg-white border-gray-200 hover:border-gray-300'}`}>
+                    <div className="flex items-center gap-4 mb-4">
+                      <div className={`w-10 h-10 rounded-lg flex items-center justify-center ${isDark ? 'bg-white/5 text-gray-300' : 'bg-gray-100 text-gray-700'}`}>
+                        <Icon size={18} />
                       </div>
-                      <span className="text-[#ff7a1a] font-bold text-lg">{step.time}</span>
+                      <span className="text-[#ff7a1a] font-mono font-bold text-sm bg-[#ff7a1a]/10 px-3 py-1 rounded-full">{step.time}</span>
                     </div>
-                    <h3 className={`text-lg font-bold mb-2 ${isDark ? 'text-white' : 'text-[#172033]'}`}>{step.title}</h3>
-                    <p className={`text-sm leading-relaxed ${isDark ? 'text-gray-400' : 'text-gray-600'}`}>{step.description}</p>
+                    <h3 className={`text-lg font-bold mb-2 ${isDark ? 'text-white' : 'text-gray-900'}`}>{step.title}</h3>
+                    <p className={`text-sm leading-relaxed ${isDark ? 'text-gray-400' : 'text-gray-500'}`}>{step.description}</p>
                   </div>
                 </div>
               );

@@ -1,4 +1,4 @@
-import { Sparkles, Shield, Smartphone, ArrowRight } from 'lucide-react';
+import { Sparkles, Shield, Smartphone, ArrowRight, Box } from 'lucide-react';
 
 interface HeroSectionProps {
   isDark: boolean;
@@ -104,8 +104,8 @@ export default function HeroSection({ isDark, onTrack }: HeroSectionProps) {
                   : 'bg-gradient-to-br from-white to-gray-50 border border-gray-100 shadow-2xl'
               }`}>
                 <div className="text-center p-6">
-                  <div className="w-32 h-32 mx-auto mb-4 rounded-2xl bg-gradient-to-br from-[#ff7a1a]/20 to-[#16c7a8]/20 flex items-center justify-center">
-                    <span className="text-5xl">🐱</span>
+                  <div className="w-32 h-32 mx-auto mb-4 rounded-2xl bg-gradient-to-br from-[#ff7a1a]/10 to-[#16c7a8]/10 flex items-center justify-center border border-gray-100 dark:border-white/5">
+                    <Box size={48} className={`transition-transform duration-500 hover:scale-110 ${isDark ? 'text-gray-300' : 'text-[#ff7a1a]'}`} />
                   </div>
                   <p className={`text-sm font-semibold ${isDark ? 'text-white' : 'text-[#172033]'}`}>
                     CleanBox Pro
@@ -124,15 +124,15 @@ export default function HeroSection({ isDark, onTrack }: HeroSectionProps) {
                 : 'bg-white border border-gray-100 shadow-xl'
             } rounded-2xl px-4 py-3 max-w-[260px]`}>
               <div className="flex items-start gap-3">
-                <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-[#16c7a8] to-[#0fa88e] flex items-center justify-center shrink-0">
-                  <span className="text-white text-lg">📱</span>
+                <div className="w-10 h-10 rounded-xl bg-[#16c7a8] flex items-center justify-center shrink-0 shadow-md">
+                  <Smartphone size={20} className="text-white" />
                 </div>
                 <div>
                   <p className={`text-xs font-semibold ${isDark ? 'text-white' : 'text-[#172033]'}`}>
                     CleanBox App
                   </p>
                   <p className={`text-xs mt-0.5 ${isDark ? 'text-gray-400' : 'text-gray-500'}`}>
-                    Boss vừa sử dụng, máy sẽ tự dọn sau 60s 🐾
+                    Boss vừa sử dụng, máy sẽ tự dọn sau 60s
                   </p>
                 </div>
               </div>

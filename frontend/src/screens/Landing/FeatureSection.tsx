@@ -19,16 +19,18 @@ export default function FeatureSection({ isDark }: FeatureSectionProps) {
           <h2 className={`text-3xl md:text-4xl lg:text-5xl font-extrabold tracking-tight mb-4 ${isDark ? 'text-white' : 'text-[#172033]'}`}>Tại sao chọn CleanBox Pro?</h2>
           <p className={`text-lg max-w-2xl mx-auto ${isDark ? 'text-gray-400' : 'text-gray-600'}`}>Công nghệ tiên tiến giúp cuộc sống của sen và boss dễ dàng hơn mỗi ngày</p>
         </div>
-        <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6 lg:gap-8 stagger-children">
+        <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-4 lg:gap-6 stagger-children">
           {FEATURES.map((feature, index) => {
             const Icon = iconMap[feature.icon] || Sparkles;
             return (
-              <div key={index} className={`reveal group relative p-7 rounded-3xl border transition-all duration-300 hover:-translate-y-2 hover:shadow-xl cursor-default ${isDark ? 'bg-[#172033] border-white/10 hover:border-[#16c7a8]/30' : 'bg-white border-gray-100 hover:border-[#16c7a8]/30'}`}>
-                <div className={`w-14 h-14 rounded-2xl flex items-center justify-center mb-5 transition-all group-hover:scale-110 ${isDark ? 'bg-[#16c7a8]/15' : 'bg-[#16c7a8]/10'}`}>
-                  <Icon size={24} className="text-[#16c7a8]" />
+              <div key={index} className={`reveal group p-8 rounded-2xl border transition-all duration-300 hover:shadow-lg cursor-default ${isDark ? 'bg-[#1e293b]/50 border-white/5 hover:border-white/10' : 'bg-white border-gray-200 hover:border-gray-300'}`}>
+                <div className="flex items-center gap-4 mb-4">
+                  <div className={`p-2 rounded-lg ${isDark ? 'bg-white/5 text-gray-300' : 'bg-gray-100 text-gray-700'}`}>
+                    <Icon size={20} />
+                  </div>
+                  <h3 className={`text-base font-bold ${isDark ? 'text-white' : 'text-gray-900'}`}>{feature.title}</h3>
                 </div>
-                <h3 className={`text-lg font-bold mb-2 ${isDark ? 'text-white' : 'text-[#172033]'}`}>{feature.title}</h3>
-                <p className={`text-sm leading-relaxed ${isDark ? 'text-gray-400' : 'text-gray-600'}`}>{feature.description}</p>
+                <p className={`text-sm leading-relaxed ${isDark ? 'text-gray-400' : 'text-gray-500'}`}>{feature.description}</p>
               </div>
             );
           })}

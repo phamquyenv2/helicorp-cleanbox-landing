@@ -96,17 +96,14 @@ export const FEATURES = [
 
 export const PAIN_POINTS = [
   {
-    emoji: '😤',
     title: 'Nhà có mùi dù thay cát thường xuyên',
     description: 'Mùi hôi vẫn tồn tại vì phân và nước tiểu ngấm vào cát lâu trước khi được xúc đi.',
   },
   {
-    emoji: '⏰',
     title: 'Bận rộn, không thể xúc cát mỗi ngày',
     description: 'Công việc bận rộn, về nhà mệt mỏi, dọn khay mèo trở thành gánh nặng hàng ngày.',
   },
   {
-    emoji: '😟',
     title: 'Lo lắng khi để mèo ở nhà một mình',
     description: 'Đi công tác, du lịch mà lo mèo ở nhà không ai dọn vệ sinh, khay bẩn mèo bỏ đi lung tung.',
   },
