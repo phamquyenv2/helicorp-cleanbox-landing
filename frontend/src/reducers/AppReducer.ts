@@ -1,4 +1,4 @@
-import type { CartItem, Product, Toast, ChatMessage } from '../types';
+import type { CartItem, Product, Toast, ChatMessage } from '../configs/Types';
 
 /* ===== LocalStorage Keys ===== */
 const KEYS = {

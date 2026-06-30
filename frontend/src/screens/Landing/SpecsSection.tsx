@@ -1,4 +1,4 @@
-import { SPECS } from '../data/constants';
+import { SPECS } from '../../configs/Constants';
 
 interface SpecsSectionProps { isDark: boolean; }
 

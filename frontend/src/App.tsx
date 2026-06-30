@@ -1,15 +1,18 @@
 import { useState, useEffect, useCallback } from 'react';
 import { useScrollReveal } from './hooks/useAnimations';
-import { initTheme, getCart, getCartCount } from './store';
-import Header from './components/Header';
-import HeroSection from './components/HeroSection';
-import PainPointSection from './components/PainPointSection';
-import FeatureSection from './components/FeatureSection';
-import SafetySection from './components/SafetySection';
-import StorySection from './components/StorySection';
-import SpecsSection from './components/SpecsSection';
-import FAQSection from './components/FAQSection';
-import Footer from './components/Footer';
+import { initTheme, getCart, getCartCount } from './reducers/AppReducer';
+import Header from './components/common/Header';
+import HeroSection from './screens/Landing/HeroSection';
+import PainPointSection from './screens/Landing/PainPointSection';
+import FeatureSection from './screens/Landing/FeatureSection';
+import SafetySection from './screens/Landing/SafetySection';
+import StorySection from './screens/Landing/StorySection';
+import SpecsSection from './screens/Landing/SpecsSection';
+import LeadFormSection from './screens/Landing/LeadFormSection';
+import FAQSection from './screens/Landing/FAQSection';
+import Footer from './components/common/Footer';
+import ToastContainer from './components/common/ToastContainer';
+import './App.css';
 
 export default function App() {
   const [isDark, setIsDark] = useState(false);
@@ -58,13 +61,14 @@ export default function App() {
         <SafetySection isDark={isDark} />
         <StorySection isDark={isDark} />
         <SpecsSection isDark={isDark} />
-        {/* LeadFormSection will be added in commit #2 */}
+        <LeadFormSection isDark={isDark} />
         {/* ProductSection will be added in commit #5 */}
         <FAQSection isDark={isDark} />
         {/* ChatbotWidget will be added in commit #6 */}
       </main>
 
       <Footer isDark={isDark} />
+      <ToastContainer />
     </div>
   );
 }

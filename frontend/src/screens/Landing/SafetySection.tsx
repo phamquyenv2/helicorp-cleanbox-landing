@@ -1,5 +1,5 @@
 import { ShieldCheck } from 'lucide-react';
-import { SAFETY_SENSORS } from '../data/constants';
+import { SAFETY_SENSORS } from '../../configs/Constants';
 
 interface SafetySectionProps { isDark: boolean; }
 

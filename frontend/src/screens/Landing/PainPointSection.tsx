@@ -1,4 +1,4 @@
-import { PAIN_POINTS } from '../data/constants';
+import { PAIN_POINTS } from '../../configs/Constants';
 
 interface PainPointSectionProps {
   isDark: boolean;

@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { ChevronDown } from 'lucide-react';
-import { FAQ_DATA } from '../data/constants';
+import { FAQ_DATA } from '../../configs/Constants';
 
 interface FAQSectionProps { isDark: boolean; }
 

@@ -1,0 +1,105 @@
+/* ===== App.css =====
+   Style chinh cho giao dien, card, section, header, footer va cac man hinh public.
+   index.css chua style global ban dau (Tailwind, design tokens, base animations).
+   App.css chua style bo sung cho cac component cu the.
+*/
+
+/* ===== Section spacing ===== */
+section {
+  position: relative;
+}
+
+/* ===== Card hover micro-interactions ===== */
+.card-hover {
+  transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1),
+              box-shadow 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.card-hover:hover {
+  transform: translateY(-4px);
+}
+
+/* ===== CTA button glow ===== */
+.cta-primary {
+  position: relative;
+  overflow: hidden;
+}
+
+.cta-primary::after {
+  content: '';
+  position: absolute;
+  inset: -2px;
+  background: linear-gradient(135deg, rgba(255, 122, 26, 0.4), rgba(255, 154, 77, 0.2));
+  border-radius: inherit;
+  z-index: -1;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+.cta-primary:hover::after {
+  opacity: 1;
+}
+
+/* ===== FAQ accordion transition ===== */
+.faq-answer {
+  overflow: hidden;
+  transition: max-height 0.3s cubic-bezier(0.16, 1, 0.3, 1),
+              opacity 0.3s ease;
+}
+
+/* ===== Sticky header glassmorphism ===== */
+.header-scrolled {
+  backdrop-filter: blur(20px) saturate(180%);
+  -webkit-backdrop-filter: blur(20px) saturate(180%);
+}
+
+/* ===== Timeline connector ===== */
+.timeline-connector {
+  position: relative;
+}
+
+.timeline-connector::before {
+  content: '';
+  position: absolute;
+  left: 24px;
+  top: 0;
+  bottom: 0;
+  width: 2px;
+  background: linear-gradient(to bottom, var(--color-primary), transparent);
+}
+
+/* ===== Specs table zebra ===== */
+.specs-row:nth-child(even) {
+  background-color: rgba(255, 122, 26, 0.03);
+}
+
+body.dark .specs-row:nth-child(even) {
+  background-color: rgba(255, 255, 255, 0.02);
+}
+
+/* ===== Mobile-safe touch targets ===== */
+@media (max-width: 768px) {
+  button,
+  a,
+  [role="button"] {
+    min-height: 44px;
+  }
+}
+
+/* ===== Smooth section transitions ===== */
+@media (prefers-reduced-motion: reduce) {
+  .reveal,
+  .reveal-left,
+  .reveal-right,
+  .reveal-scale {
+    opacity: 1;
+    transform: none;
+    transition: none;
+  }
+
+  .animate-float,
+  .animate-float-delayed,
+  .animate-pulse-glow {
+    animation: none;
+  }
+}

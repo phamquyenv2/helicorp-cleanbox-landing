@@ -1,6 +1,6 @@
 import { useState, useEffect, useCallback } from 'react';
 import { Moon, Sun, ShoppingCart, Menu, X } from 'lucide-react';
-import { getTheme, setTheme } from '../store';
+import { getTheme, setTheme } from '../../reducers/AppReducer';
 
 interface HeaderProps {
   onCartClick: () => void;

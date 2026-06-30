@@ -1,6 +1,6 @@
 import { useCallback, useEffect, useRef } from 'react';
-import { trackEvent } from '../services/api';
-import { getSessionId } from '../store';
+import { trackEvent } from '../configs/Apis';
+import { getSessionId } from '../reducers/AppReducer';
 
 /**
  * Tracking hook — sends events to backend (best-effort, fire & forget).

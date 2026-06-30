@@ -1,4 +1,4 @@
-import type { LeadFormData, TrackingEvent, ApiResponse, ChatMessage } from '../types';
+import type { LeadFormData, TrackingEvent, ApiResponse, ChatMessage } from './Types';
 
 const API_URL = import.meta.env.VITE_API_URL;
 

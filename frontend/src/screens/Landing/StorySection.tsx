@@ -1,5 +1,5 @@
 import { Cat, RotateCw, Bell, Home } from 'lucide-react';
-import { STORY_STEPS } from '../data/constants';
+import { STORY_STEPS } from '../../configs/Constants';
 
 interface StorySectionProps { isDark: boolean; }
 

@@ -1,5 +1,5 @@
 import { Sparkles, Wind, ShieldCheck, Smartphone, Maximize, Wrench } from 'lucide-react';
-import { FEATURES } from '../data/constants';
+import { FEATURES } from '../../configs/Constants';
 
 interface FeatureSectionProps {
   isDark: boolean;
