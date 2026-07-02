@@ -1,122 +1,91 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from './assets/vite.svg'
-import heroImg from './assets/hero.png'
-import './App.css'
+import { useState, useEffect, useCallback } from 'react';
+import { useScrollReveal } from './hooks/useAnimations';
+import { initTheme, getCart, getCartCount } from './reducers/AppReducer';
+import type { CartItem } from './configs/Types';
+import Header from './components/common/Header';
+import HeroSection from './screens/Landing/HeroSection';
+import PainPointSection from './screens/Landing/PainPointSection';
+import FeatureSection from './screens/Landing/FeatureSection';
+import SafetySection from './screens/Landing/SafetySection';
+import StorySection from './screens/Landing/StorySection';
+import SpecsSection from './screens/Landing/SpecsSection';
+import ProductSection from './screens/Landing/ProductSection';
+import LeadFormSection from './screens/Landing/LeadFormSection';
+import FAQSection from './screens/Landing/FAQSection';
+import Footer from './components/common/Footer';
+import ToastContainer from './components/common/ToastContainer';
+import CartDrawer from './components/common/CartDrawer';
+import ChatbotWidget from './components/common/ChatbotWidget';
+import './App.css';
 
-function App() {
-  const [count, setCount] = useState(0)
+export default function App() {
+  const [isDark, setIsDark] = useState(false);
+  const [cart, setCart] = useState<CartItem[]>([]);
+  const [isCartOpen, setIsCartOpen] = useState(false);
+
+  // Initialize theme & cart
+  useEffect(() => {
+    const theme = initTheme();
+    setIsDark(theme === 'dark');
+    setCart(getCart());
+  }, []);
+
+  // Listen for theme changes
+  useEffect(() => {
+    const observer = new MutationObserver(() => {
+      setIsDark(document.body.classList.contains('dark'));
+    });
+    observer.observe(document.body, { attributes: true, attributeFilter: ['class'] });
+    return () => observer.disconnect();
+  }, []);
+
+  // Scroll reveal animations
+  useScrollReveal();
+
+  // Tracking stub (will be replaced with real tracking in later commits)
+  const handleTrack = useCallback((_eventType: string, _extra?: Record<string, unknown>) => {
+    // Will be implemented with backend integration
+  }, []);
+
+  const handleCartUpdate = useCallback((updatedCart?: CartItem[]) => {
+    const newCart = updatedCart ?? getCart();
+    setCart(newCart);
+  }, []);
+
+  const handleCartClick = useCallback(() => {
+    setIsCartOpen(true);
+  }, []);
 
   return (
-    <>
-      <section id="center">
-        <div className="hero">
-          <img src={heroImg} className="base" width="170" height="179" alt="" />
-          <img src={reactLogo} className="framework" alt="React logo" />
-          <img src={viteLogo} className="vite" alt="Vite logo" />
-        </div>
-        <div>
-          <h1>Get started</h1>
-          <p>
-            Edit <code>src/App.tsx</code> and save to test <code>HMR</code>
-          </p>
-        </div>
-        <button
-          type="button"
-          className="counter"
-          onClick={() => setCount((count) => count + 1)}
-        >
-          Count is {count}
-        </button>
-      </section>
+    <div className={`min-h-screen w-full max-w-full overflow-x-clip ${isDark ? 'bg-[#101827]' : 'bg-[#fff8f1]'} transition-colors duration-300`}>
+      <Header
+        onCartClick={handleCartClick}
+        onTrack={handleTrack}
+        cartItems={getCartCount(cart)}
+      />
 
-      <div className="ticks"></div>
+      <main className="w-full max-w-full overflow-x-clip">
+        <HeroSection isDark={isDark} onTrack={handleTrack} />
+        <PainPointSection isDark={isDark} />
+        <FeatureSection isDark={isDark} />
+        <SafetySection isDark={isDark} />
+        <StorySection isDark={isDark} />
+        <SpecsSection isDark={isDark} />
+        <ProductSection isDark={isDark} onCartUpdate={() => handleCartUpdate()} />
+        <LeadFormSection isDark={isDark} />
+        <FAQSection isDark={isDark} />
+      </main>
 
-      <section id="next-steps">
-        <div id="docs">
-          <svg className="icon" role="presentation" aria-hidden="true">
-            <use href="/icons.svg#documentation-icon"></use>
-          </svg>
-          <h2>Documentation</h2>
-          <p>Your questions, answered</p>
-          <ul>
-            <li>
-              <a href="https://vite.dev/" target="_blank">
-                <img className="logo" src={viteLogo} alt="" />
-                Explore Vite
-              </a>
-            </li>
-            <li>
-              <a href="https://react.dev/" target="_blank">
-                <img className="button-icon" src={reactLogo} alt="" />
-                Learn more
-              </a>
-            </li>
-          </ul>
-        </div>
-        <div id="social">
-          <svg className="icon" role="presentation" aria-hidden="true">
-            <use href="/icons.svg#social-icon"></use>
-          </svg>
-          <h2>Connect with us</h2>
-          <p>Join the Vite community</p>
-          <ul>
-            <li>
-              <a href="https://github.com/vitejs/vite" target="_blank">
-                <svg
-                  className="button-icon"
-                  role="presentation"
-                  aria-hidden="true"
-                >
-                  <use href="/icons.svg#github-icon"></use>
-                </svg>
-                GitHub
-              </a>
-            </li>
-            <li>
-              <a href="https://chat.vite.dev/" target="_blank">
-                <svg
-                  className="button-icon"
-                  role="presentation"
-                  aria-hidden="true"
-                >
-                  <use href="/icons.svg#discord-icon"></use>
-                </svg>
-                Discord
-              </a>
-            </li>
-            <li>
-              <a href="https://x.com/vite_js" target="_blank">
-                <svg
-                  className="button-icon"
-                  role="presentation"
-                  aria-hidden="true"
-                >
-                  <use href="/icons.svg#x-icon"></use>
-                </svg>
-                X.com
-              </a>
-            </li>
-            <li>
-              <a href="https://bsky.app/profile/vite.dev" target="_blank">
-                <svg
-                  className="button-icon"
-                  role="presentation"
-                  aria-hidden="true"
-                >
-                  <use href="/icons.svg#bluesky-icon"></use>
-                </svg>
-                Bluesky
-              </a>
-            </li>
-          </ul>
-        </div>
-      </section>
-
-      <div className="ticks"></div>
-      <section id="spacer"></section>
-    </>
-  )
+      <Footer isDark={isDark} />
+      <ToastContainer />
+      <CartDrawer
+        isOpen={isCartOpen}
+        onClose={() => setIsCartOpen(false)}
+        cart={cart}
+        onCartUpdate={handleCartUpdate}
+        isDark={isDark}
+      />
+      <ChatbotWidget isDark={isDark} />
+    </div>
+  );
 }
-
-export default App
