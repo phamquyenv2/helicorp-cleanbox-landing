@@ -8,6 +8,7 @@ import { submitLead } from '../../configs/Apis';
 import { showToast } from '../../reducers/AppReducer';
 import { useTracking } from '../../hooks/useTracking';
 import type { LeadFormData } from '../../configs/Types';
+import Container from '../../components/common/Container';
 
 interface LeadFormSectionProps {
   isDark: boolean;
@@ -76,16 +77,17 @@ export default function LeadFormSection({ isDark }: LeadFormSectionProps) {
   };
 
   return (
-    <section id="lead-form" className={`py-16 md:py-24 ${isDark ? 'bg-[#1e293b]' : 'bg-orange-50/50'}`}>
-      <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className={`rounded-3xl shadow-xl overflow-hidden reveal ${
-          isDark ? 'bg-[#101827] shadow-black/20' : 'bg-white shadow-orange-500/10'
+    <section id="lead-form" className={`py-20 md:py-28 ${isDark ? 'bg-[#0e1525]' : 'bg-orange-50/40'}`}>
+      <Container>
+        <div className="max-w-4xl mx-auto">
+        <div className={`rounded-2xl shadow-xl overflow-hidden reveal ${
+          isDark ? 'bg-[#151c2c] border border-white/5' : 'bg-white border border-gray-100 shadow-orange-500/5'
         }`}>
           <div className="grid md:grid-cols-5 h-full">
             
             {/* Left side: Info */}
             <div className={`md:col-span-2 p-8 md:p-10 flex flex-col justify-center text-white ${
-              isDark ? 'bg-gradient-to-br from-[#1e293b] to-[#0f172a]' : 'bg-gradient-to-br from-[#ff7a1a] to-[#ff9a4d]'
+              isDark ? 'bg-gradient-to-br from-[#1a2236] to-[#0e1525] border-r border-white/5' : 'bg-gradient-to-br from-[#ff7a1a] to-[#ff9a4d]'
             }`}>
               <h2 className="text-3xl font-bold mb-4">Nhận tư vấn ngay!</h2>
               <p className="text-white/80 mb-8 leading-relaxed">
@@ -106,8 +108,8 @@ export default function LeadFormSection({ isDark }: LeadFormSectionProps) {
             <div className="md:col-span-3 p-8 md:p-10">
               {isSuccess ? (
                 <div className="h-full flex flex-col items-center justify-center text-center animate-toast-in">
-                  <div className="w-20 h-20 bg-green-100 rounded-full flex items-center justify-center mb-6">
-                    <CheckCircle2 size={40} className="text-green-500" />
+                  <div className={`w-20 h-20 rounded-full flex items-center justify-center mb-6 ${isDark ? 'bg-emerald-500/10 text-emerald-400' : 'bg-green-100 text-green-500'}`}>
+                    <CheckCircle2 size={40} className="currentColor" />
                   </div>
                   <h3 className={`text-2xl font-bold mb-2 ${isDark ? 'text-white' : 'text-gray-900'}`}>Đăng ký thành công!</h3>
                   <p className={`mb-8 ${isDark ? 'text-gray-400' : 'text-gray-600'}`}>
@@ -115,7 +117,9 @@ export default function LeadFormSection({ isDark }: LeadFormSectionProps) {
                   </p>
                   <button
                     onClick={() => setIsSuccess(false)}
-                    className="px-6 py-2.5 bg-gray-100 text-gray-700 font-medium rounded-xl hover:bg-gray-200 transition-colors cursor-pointer"
+                    className={`px-6 py-2.5 font-medium rounded-xl transition-colors cursor-pointer ${
+                      isDark ? 'bg-white/10 text-white hover:bg-white/15' : 'bg-gray-100 text-gray-700 hover:bg-gray-200'
+                    }`}
                   >
                     Gửi yêu cầu khác
                   </button>
@@ -136,7 +140,7 @@ export default function LeadFormSection({ isDark }: LeadFormSectionProps) {
                           errors.fullName 
                             ? 'border-red-500 focus:ring-red-500/20' 
                             : isDark 
-                              ? 'bg-[#1e293b] border-gray-700 text-white focus:border-[#ff7a1a] focus:ring-[#ff7a1a]/20' 
+                              ? 'bg-[#0e1525] border-white/10 text-white focus:border-[#ff7a1a] focus:ring-[#ff7a1a]/20' 
                               : 'bg-gray-50 border-gray-200 text-gray-900 focus:border-[#ff7a1a] focus:ring-[#ff7a1a]/20'
                         }`}
                       />
@@ -156,7 +160,7 @@ export default function LeadFormSection({ isDark }: LeadFormSectionProps) {
                           errors.phone 
                             ? 'border-red-500 focus:ring-red-500/20' 
                             : isDark 
-                              ? 'bg-[#1e293b] border-gray-700 text-white focus:border-[#ff7a1a] focus:ring-[#ff7a1a]/20' 
+                              ? 'bg-[#0e1525] border-white/10 text-white focus:border-[#ff7a1a] focus:ring-[#ff7a1a]/20' 
                               : 'bg-gray-50 border-gray-200 text-gray-900 focus:border-[#ff7a1a] focus:ring-[#ff7a1a]/20'
                         }`}
                       />
@@ -177,7 +181,7 @@ export default function LeadFormSection({ isDark }: LeadFormSectionProps) {
                         errors.email 
                           ? 'border-red-500 focus:ring-red-500/20' 
                           : isDark 
-                            ? 'bg-[#1e293b] border-gray-700 text-white focus:border-[#ff7a1a] focus:ring-[#ff7a1a]/20' 
+                            ? 'bg-[#0e1525] border-white/10 text-white focus:border-[#ff7a1a] focus:ring-[#ff7a1a]/20' 
                             : 'bg-gray-50 border-gray-200 text-gray-900 focus:border-[#ff7a1a] focus:ring-[#ff7a1a]/20'
                       }`}
                     />
@@ -198,7 +202,7 @@ export default function LeadFormSection({ isDark }: LeadFormSectionProps) {
                           errors.catCount 
                             ? 'border-red-500 focus:ring-red-500/20' 
                             : isDark 
-                              ? 'bg-[#1e293b] border-gray-700 text-white focus:border-[#ff7a1a] focus:ring-[#ff7a1a]/20' 
+                              ? 'bg-[#0e1525] border-white/10 text-white focus:border-[#ff7a1a] focus:ring-[#ff7a1a]/20' 
                               : 'bg-gray-50 border-gray-200 text-gray-900 focus:border-[#ff7a1a] focus:ring-[#ff7a1a]/20'
                         }`}
                       />
@@ -216,7 +220,7 @@ export default function LeadFormSection({ isDark }: LeadFormSectionProps) {
                           errors.catWeightRange 
                             ? 'border-red-500 focus:ring-red-500/20' 
                             : isDark 
-                              ? 'bg-[#1e293b] border-gray-700 text-white focus:border-[#ff7a1a] focus:ring-[#ff7a1a]/20' 
+                              ? 'bg-[#0e1525] border-white/10 text-white focus:border-[#ff7a1a] focus:ring-[#ff7a1a]/20' 
                               : 'bg-gray-50 border-gray-200 text-gray-900 focus:border-[#ff7a1a] focus:ring-[#ff7a1a]/20'
                         }`}
                       >
@@ -240,7 +244,7 @@ export default function LeadFormSection({ isDark }: LeadFormSectionProps) {
                         errors.need 
                           ? 'border-red-500 focus:ring-red-500/20' 
                           : isDark 
-                            ? 'bg-[#1e293b] border-gray-700 text-white focus:border-[#ff7a1a] focus:ring-[#ff7a1a]/20' 
+                            ? 'bg-[#0e1525] border-white/10 text-white focus:border-[#ff7a1a] focus:ring-[#ff7a1a]/20' 
                             : 'bg-gray-50 border-gray-200 text-gray-900 focus:border-[#ff7a1a] focus:ring-[#ff7a1a]/20'
                       }`}
                     >
@@ -265,7 +269,7 @@ export default function LeadFormSection({ isDark }: LeadFormSectionProps) {
                         errors.message 
                           ? 'border-red-500 focus:ring-red-500/20' 
                           : isDark 
-                            ? 'bg-[#1e293b] border-gray-700 text-white focus:border-[#ff7a1a] focus:ring-[#ff7a1a]/20' 
+                            ? 'bg-[#0e1525] border-white/10 text-white focus:border-[#ff7a1a] focus:ring-[#ff7a1a]/20' 
                             : 'bg-gray-50 border-gray-200 text-gray-900 focus:border-[#ff7a1a] focus:ring-[#ff7a1a]/20'
                       }`}
                     />
@@ -298,7 +302,8 @@ export default function LeadFormSection({ isDark }: LeadFormSectionProps) {
             </div>
           </div>
         </div>
-      </div>
+        </div>
+      </Container>
     </section>
   );
 }

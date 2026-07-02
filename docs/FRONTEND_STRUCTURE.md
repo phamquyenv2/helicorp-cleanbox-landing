@@ -1,25 +1,46 @@
 # Cau truc tong quat Frontend
 
-Frontend cua du an nam trong thu muc `smarteduresourceweb`. Day la ung dung React dung de hien thi giao dien nguoi dung, goi API tu backend va xu ly cac chuc nang phia client.
+Frontend cua du an nam trong thu muc `frontend`. Day la ung dung React + Vite + TypeScript + Tailwind CSS dung de hien thi landing page san pham CleanBox Pro, goi API tu backend va xu ly cac chuc nang phia client.
 
 ## Cau truc thu muc
 
 ```text
-smarteduresourceweb/
+frontend/
 +-- public/
 +-- src/
 |   +-- components/
+|   |   +-- common/
+|   |       +-- Header.tsx
+|   |       +-- Footer.tsx
+|   |       +-- ToastContainer.tsx
+|   |       +-- CartDrawer.tsx
+|   |       +-- ChatbotWidget.tsx
 |   +-- configs/
+|   |   +-- Apis.ts
+|   |   +-- Constants.ts
+|   |   +-- Types.ts
 |   +-- hooks/
+|   |   +-- useAnimations.ts
+|   |   +-- useTracking.ts
 |   +-- reducers/
+|   |   +-- AppReducer.ts
 |   +-- screens/
-|   +-- App.js
+|   |   +-- Landing/
+|   |       +-- HeroSection.tsx
+|   |       +-- PainPointSection.tsx
+|   |       +-- FeatureSection.tsx
+|   |       +-- SafetySection.tsx
+|   |       +-- StorySection.tsx
+|   |       +-- SpecsSection.tsx
+|   |       +-- ProductSection.tsx
+|   |       +-- LeadFormSection.tsx
+|   |       +-- FAQSection.tsx
+|   +-- App.tsx
 |   +-- App.css
-|   +-- index.js
+|   +-- main.tsx
 |   +-- index.css
 +-- package.json
-+-- firebase.json
-+-- README.md
++-- index.html
 ```
 
 ## Chuc nang tung thu muc/file chinh
@@ -28,81 +49,79 @@ smarteduresourceweb/
 
 Chua cac file tinh duoc trinh duyet truy cap truc tiep.
 
-- `index.html`: file HTML goc, noi React app duoc gan vao.
-- `manifest.json`, `favicon.ico`, logo: thong tin hien thi cua ung dung tren trinh duyet.
-- `momo.png`: hinh anh lien quan den thanh toan MoMo.
-- `thumbnails/`: anh thumbnail cho tai lieu va khoa hoc.
+- `index.html`: file HTML goc voi SEO meta tags (title, description, Open Graph).
 
 ### `src/`
 
 Chua toan bo source code chinh cua frontend React.
 
-### `src/components/`
+### `src/components/common/`
 
-Chua cac component dung chung, co the tai su dung o nhieu man hinh.
+Chua cac component dung chung, co the tai su dung o nhieu noi.
 
-- `common/`: cac component chung nhu Header, Footer, card khoa hoc, card tai lieu, spinner.
-- `Layouts/`: cac layout rieng cho tung nhom nguoi dung nhu Admin va Lecturer.
-- `DashboardLayout/`: layout dashboard dung chung, gom sidebar, topbar va vung noi dung.
+- `Header.tsx`: header co dinh voi logo, menu dieu huong (Tinh nang, An toan, Thong so, San pham, FAQ), nut dark mode toggle, cart icon voi badge so luong, nut CTA "Nhan tu van", menu mobile responsive.
+- `Footer.tsx`: footer voi thong tin thuong hieu, link nhanh va thong bao ban quyen.
+- `ToastContainer.tsx`: he thong hien thi thong bao toast (success, error, info, warning) voi animation vao/ra.
+- `CartDrawer.tsx`: gio hang dang drawer truot tu ben phai, hien thi danh sach san pham da them, dieu chinh so luong, xoa san pham, tinh tong tien, nut dat hang demo.
+- `ChatbotWidget.tsx`: widget chatbot goc phai man hinh, co nut noi FAB, cua so chat voi tin nhan, goi y cau hoi, typing indicator, luu lich su chat vao localStorage.
 
 ### `src/configs/`
 
-Chua cac file cau hinh va helper dung chung.
+Chua cac file cau hinh va du lieu tinh.
 
-- `Apis.js`: cau hinh axios va danh sach endpoint goi API backend.
-- `Context.js`: tao context de chia se thong tin user trong toan app.
-- `MockData.js`: chua helper format du lieu, label, mau badge va mot so du lieu phu tro hien thi.
+- `Apis.ts`: cau hinh API voi base URL tu env, cac function goi backend (submitLead, trackEvent, sendChatMessage, getProducts), va local chatbot fallback keyword matching.
+- `Constants.ts`: du lieu tinh cua ung dung gom PRODUCTS (3 san pham), FEATURES (6 tinh nang), PAIN_POINTS (3 van de), SAFETY_SENSORS, STORY_STEPS, SPECS, FAQ_DATA, CHATBOT_SUGGESTIONS, CAT_WEIGHT_RANGES, NEED_OPTIONS.
+- `Types.ts`: dinh nghia TypeScript interfaces/types: Product, CartItem, LeadFormData, ChatMessage, TrackingEvent, ApiResponse, Toast.
 
 ### `src/hooks/`
 
-Chua custom hook cua project.
+Chua custom hooks cua project.
 
-- `useSubmissionGuard.js`: ho tro kiem soat viec submit form, tranh gui trung hoac xu ly trang thai dang submit.
+- `useAnimations.ts`: hook xu ly scroll reveal animation, them class "visible" khi element vao viewport.
+- `useTracking.ts`: hook quan ly session ID va gui tracking events (page_view, scroll milestones, cta_click, form events, dark_mode_toggle, cart/favorite/chat events).
 
 ### `src/reducers/`
 
-Chua reducer quan ly state global don gian.
+Chua logic quan ly state va localStorage.
 
-- `MyUserReducer.js`: xu ly dang nhap, dang xuat va trang thai user.
+- `AppReducer.ts`: quan ly theme (dark/light mode), session ID, cart (them/xoa/cap nhat so luong/tinh tong), favorites (toggle yeu thich), recently viewed, chat history, toast notifications, va format gia tien.
 
-### `src/screens/`
+### `src/screens/Landing/`
 
-Chua cac man hinh/page chinh cua ung dung. Moi thu muc con tuong ung voi mot nhom chuc nang.
+Chua cac section cua landing page. Moi file tuong ung voi mot phan cua trang.
 
-- `Home/`: trang chu.
-- `Auth/`: dang nhap, dang ky sinh vien, dang ky giang vien.
-- `Student/`: dashboard sinh vien, ho so, khoa hoc cua toi, lo trinh hoc tap.
-- `Resource/`: danh sach va chi tiet tai lieu/hoc lieu.
-- `Course/`: danh sach khoa hoc, chi tiet khoa hoc, man hinh hoc.
-- `Quiz/`: danh sach quiz, lam quiz, xem ket qua.
-- `Forum/`: dien dan, thread, tao bai viet moi.
-- `Chat/`: man hinh nhan tin.
-- `Payment/`: thanh toan, lich su thanh toan, ket qua MoMo.
-- `Admin/`: cac man hinh quan tri he thong.
-- `Lecturer/`: cac man hinh quan ly cua giang vien.
+- `HeroSection.tsx`: banner chinh voi tieu de, mo ta, 2 nut CTA (Nhan tu van, Xem cach hoat dong), mockup san pham voi card thong bao app noi, badge tinh nang.
+- `PainPointSection.tsx`: 3 van de quen thuoc cua sen nuoi meo (mui, ban ron, lo lang).
+- `FeatureSection.tsx`: 6 tinh nang noi bat dang card grid voi icon, title, description, hover interaction.
+- `SafetySection.tsx`: gioi thieu he thong cam bien an toan da diem voi visual hien thi may o giua va cac diem cam bien xung quanh.
+- `StorySection.tsx`: scrollytelling "Mot ngay cung boss va CleanBox Pro" voi 4 moc thoi gian (07:30, 07:31, 08:00, 20:00), sticky layout desktop, scroll reveal mobile.
+- `SpecsSection.tsx`: bang thong so ky thuat san pham (ten, loai, co che, cam bien, ket noi, che do, khu mui, phu hop, loai cat, thoi gian chua rac, bao hanh).
+- `ProductSection.tsx`: mini ecommerce voi 3 san pham (Lite, Pro, Pro Plus), moi card co badge, nut yeu thich, gia voi giam gia, danh sach tinh nang, nut them vao gio hang voi trang thai "Da them".
+- `LeadFormSection.tsx`: form dang ky nhan tu van voi React Hook Form + Zod validation (fullName, phone, email, catCount, catWeightRange, need, message), loading state, toast success/error.
+- `FAQSection.tsx`: 6 cau hoi thuong gap dang accordion co animation mo/dong.
 
-### `src/App.js`
+### `src/App.tsx`
 
 File trung tam cua frontend.
 
 Chuc nang chinh:
 
-- Khai bao routing cua ung dung.
-- Gan layout phu hop cho tung nhom route.
-- Quan ly user context.
-- Kiem tra mot so quyen truy cap cua lecturer.
-- Hien thi Header/Footer cho layout thong thuong.
+- Khai bao va sap xep thu tu cac section cua landing page.
+- Quan ly state theme (dark/light) va dong bo voi body class.
+- Quan ly state cart o cap App de dong bo giua Header badge, ProductSection va CartDrawer.
+- Khoi tao scroll reveal animations.
+- Render Header, tat ca section, Footer, ToastContainer, CartDrawer va ChatbotWidget.
 
-### `src/index.js`
+### `src/main.tsx`
 
-Diem khoi chay cua React app. File nay render `App` vao `public/index.html`.
+Diem khoi chay cua React app. File nay render `App` vao `index.html`.
 
 ### `src/App.css` va `src/index.css`
 
 Chua style tong the cua ung dung.
 
-- `index.css`: style global ban dau.
-- `App.css`: style chinh cho giao dien, card, section, header, footer va cac man hinh public.
+- `index.css`: Tailwind CSS import, design system tokens (mau, font), dark mode styles, scroll reveal animations (reveal, reveal-left, reveal-right, reveal-scale, stagger), hero floating animations, toast animations, chatbot animations, timeline, scrollbar va selection styles.
+- `App.css`: style bo sung cho card hover, CTA button glow, FAQ accordion, sticky header glassmorphism, timeline connector, specs table zebra, mobile touch targets va reduced motion preferences.
 
 ### `package.json`
 
@@ -110,22 +129,19 @@ Khai bao thong tin project, thu vien phu thuoc va cac lenh chay frontend.
 
 Mot so script chinh:
 
-- `npm start`: chay frontend o moi truong development.
-- `npm run build`: build frontend cho production.
-- `npm test`: chay test.
-
-### `firebase.json`
-
-File cau hinh lien quan den Firebase Hosting/deploy neu du an co su dung Firebase.
+- `npm run dev`: chay frontend o moi truong development (Vite).
+- `npm run build`: build frontend cho production (tsc + vite build).
+- `npm run preview`: xem truoc ban build production.
+- `npm run lint`: chay oxlint kiem tra code.
 
 ## Tom tat ngan gon
 
 Frontend duoc to chuc theo huong:
 
-- `components/` de chua thanh phan giao dien dung lai.
-- `screens/` de chua cac trang theo nghiep vu.
-- `configs/` de chua cau hinh API, context va helper.
-- `reducers/` de quan ly state user.
-- `hooks/` de chua logic React tai su dung.
-- `App.js` de gom routing va layout tong.
-- `public/` de chua file tinh va tai nguyen cong khai.
+- `components/common/` de chua thanh phan giao dien dung lai (Header, Footer, Toast, CartDrawer, ChatbotWidget).
+- `screens/Landing/` de chua cac section cua landing page theo thu tu hien thi.
+- `configs/` de chua cau hinh API, du lieu tinh va TypeScript types.
+- `reducers/` de quan ly state localStorage (theme, cart, favorites, chat history, toast).
+- `hooks/` de chua logic React tai su dung (animations, tracking).
+- `App.tsx` de gom tat ca section, quan ly state tong va render layout.
+- `public/` de chua file tinh va SEO meta.

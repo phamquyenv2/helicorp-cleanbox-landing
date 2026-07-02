@@ -1,48 +1,59 @@
-import { ShieldCheck } from 'lucide-react';
+import { ShieldCheck, Eye, Scale, Lock, MonitorCheck } from 'lucide-react';
 import { SAFETY_SENSORS } from '../../configs/Constants';
+import Container from '../../components/common/Container';
 
 interface SafetySectionProps { isDark: boolean; }
+const sensorIcons = [Eye, Scale, Lock, MonitorCheck];
 
 export default function SafetySection({ isDark }: SafetySectionProps) {
+  const d = isDark;
   return (
-    <section id="safety" className="py-20 md:py-28 relative overflow-hidden">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="text-center mb-16 reveal">
-          <span className={`inline-block text-sm font-semibold uppercase tracking-wider mb-3 ${isDark ? 'text-red-400' : 'text-red-500'}`}>An toàn hàng đầu</span>
-          <h2 className={`text-3xl md:text-4xl lg:text-5xl font-extrabold tracking-tight mb-4 ${isDark ? 'text-white' : 'text-[#172033]'}`}>An toàn cho boss là ưu tiên số 1</h2>
-          <p className={`text-lg max-w-3xl mx-auto ${isDark ? 'text-gray-400' : 'text-gray-600'}`}>
+    <section id="safety" className="py-20 md:py-28">
+      <Container>
+        <div className="text-center mb-14 reveal">
+          <div className={`section-label inline-flex mb-4 ${d ? 'bg-emerald-500/10 text-emerald-400 border border-emerald-500/15' : 'bg-emerald-50 text-emerald-600 border border-emerald-200/60'}`}>
+            <ShieldCheck size={13} />
+            <span>AN TOÀN HÀNG ĐẦU</span>
+          </div>
+          <h2 className={`text-3xl md:text-4xl font-extrabold tracking-tight mb-4 ${d ? 'text-white' : 'text-[#172033]'}`}>
+            An toàn cho boss là ưu tiên số 1
+          </h2>
+          <p className={`text-base max-w-2xl mx-auto ${d ? 'text-gray-400' : 'text-gray-500'}`}>
             Hệ thống cảm biến giúp phát hiện khi mèo bước vào, quay lại hoặc đứng gần vùng hoạt động. Nếu phát hiện rủi ro, máy sẽ tự động tạm dừng để bảo vệ boss.
           </p>
         </div>
 
-        <div className="relative max-w-4xl mx-auto">
-          {/* Center product visual */}
-          <div className="flex justify-center mb-12 reveal-scale">
-            <div className={`w-48 h-48 md:w-56 md:h-56 rounded-3xl flex items-center justify-center relative ${isDark ? 'bg-gradient-to-br from-[#1e293b] to-[#172033] border border-white/10' : 'bg-gradient-to-br from-white to-gray-50 border border-gray-100 shadow-2xl'}`}>
-              <ShieldCheck size={64} className="text-[#16c7a8]" />
-              {/* Pulse ring */}
-              <div className="absolute inset-0 rounded-3xl border-2 border-[#16c7a8]/30 animate-ping" style={{ animationDuration: '3s' }} />
+        {/* Center icon */}
+        <div className="flex justify-center mb-12 reveal-scale">
+          <div className={`w-28 h-28 rounded-3xl flex items-center justify-center ${
+            d ? 'bg-[#151c2c] border border-white/6 shadow-xl' : 'bg-white border border-gray-100 shadow-xl'
+          }`}>
+            <div className="w-16 h-16 rounded-2xl bg-gradient-to-br from-[#16c7a8] to-[#0fa88e] flex items-center justify-center shadow-lg shadow-teal-500/20">
+              <ShieldCheck size={28} className="text-white" />
             </div>
           </div>
+        </div>
 
-          {/* Sensor cards grid */}
-          <div className="grid sm:grid-cols-2 gap-5 stagger-children">
-            {SAFETY_SENSORS.map((sensor, i) => (
-              <div key={i} className={`reveal group p-6 rounded-2xl border transition-all duration-300 hover:-translate-y-1 hover:shadow-lg ${isDark ? 'bg-[#172033] border-white/10 hover:border-[#16c7a8]/30' : 'bg-white border-gray-100 hover:border-[#16c7a8]/30'}`}>
+        {/* Sensor cards */}
+        <div className="grid sm:grid-cols-2 gap-5 max-w-3xl mx-auto stagger-children">
+          {SAFETY_SENSORS.map((sensor, i) => {
+            const Icon = sensorIcons[i] || ShieldCheck;
+            return (
+              <div key={i} className="reveal p-5 rounded-2xl card-glass card-hover">
                 <div className="flex items-start gap-4">
-                  <div className={`w-10 h-10 rounded-xl flex items-center justify-center shrink-0 ${isDark ? 'bg-[#16c7a8]/15' : 'bg-[#16c7a8]/10'}`}>
-                    <ShieldCheck size={18} className="text-[#16c7a8]" />
+                  <div className={`w-10 h-10 rounded-xl flex items-center justify-center shrink-0 ${d ? 'bg-emerald-500/10 text-emerald-400' : 'bg-emerald-50 text-emerald-600'}`}>
+                    <Icon size={18} />
                   </div>
                   <div>
-                    <h3 className={`font-bold mb-1 ${isDark ? 'text-white' : 'text-[#172033]'}`}>{sensor.name}</h3>
-                    <p className={`text-sm ${isDark ? 'text-gray-400' : 'text-gray-600'}`}>{sensor.description}</p>
+                    <h3 className={`font-bold mb-1 ${d ? 'text-white' : 'text-[#172033]'}`}>{sensor.name}</h3>
+                    <p className={`text-sm leading-relaxed ${d ? 'text-gray-400' : 'text-gray-500'}`}>{sensor.description}</p>
                   </div>
                 </div>
               </div>
-            ))}
-          </div>
+            );
+          })}
         </div>
-      </div>
+      </Container>
     </section>
   );
 }

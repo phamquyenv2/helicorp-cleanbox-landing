@@ -1,49 +1,43 @@
+import { Droplets, Clock, AlertTriangle } from 'lucide-react';
 import { PAIN_POINTS } from '../../configs/Constants';
+import Container from '../../components/common/Container';
 
-interface PainPointSectionProps {
-  isDark: boolean;
-}
+interface PainPointSectionProps { isDark: boolean; }
+
+const icons = [Droplets, Clock, AlertTriangle];
 
 export default function PainPointSection({ isDark }: PainPointSectionProps) {
+  const d = isDark;
   return (
-    <section id="pain-points" className="py-20 md:py-28 relative">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        {/* Section Header */}
-        <div className="text-center mb-16 reveal">
-          <span className={`inline-block text-sm font-semibold uppercase tracking-wider mb-3 ${isDark ? 'text-orange-400' : 'text-[#ff7a1a]'}`}>
-            Vấn đề quen thuộc
-          </span>
-          <h2 className={`text-3xl md:text-4xl lg:text-5xl font-extrabold tracking-tight ${isDark ? 'text-white' : 'text-[#172033]'}`}>
+    <section id="pain-points" className="py-20 md:py-28">
+      <Container>
+        <div className="text-center mb-14 reveal">
+          <div className={`section-label inline-flex mb-4 ${d ? 'bg-amber-500/10 text-amber-400 border border-amber-500/15' : 'bg-amber-50 text-amber-600 border border-amber-200/60'}`}>
+            VẤN ĐỀ QUEN THUỘC
+          </div>
+          <h2 className={`text-3xl md:text-4xl font-extrabold tracking-tight ${d ? 'text-white' : 'text-[#172033]'}`}>
             Sen nào cũng từng gặp
           </h2>
         </div>
 
-        {/* Pain Point Cards */}
-        <div className="grid md:grid-cols-3 gap-6 lg:gap-8 stagger-children">
-          {PAIN_POINTS.map((point, index) => (
-            <div
-              key={index}
-              className={`reveal group relative p-8 rounded-2xl border transition-all duration-300 hover:shadow-md ${
-                isDark
-                  ? 'bg-[#1e293b]/50 border-white/5 hover:border-white/10'
-                  : 'bg-white border-gray-200 hover:border-gray-300'
-              }`}
-            >
-              <div className="flex justify-between items-start mb-6">
-                <h3 className={`text-lg font-bold pr-8 ${isDark ? 'text-white' : 'text-gray-900'}`}>
-                  {point.title}
-                </h3>
-                <span className={`text-2xl font-black font-mono opacity-20 ${isDark ? 'text-white' : 'text-gray-900'}`}>
-                  0{index + 1}
-                </span>
+        <div className="grid md:grid-cols-3 gap-5 stagger-children">
+          {PAIN_POINTS.map((point, i) => {
+            const Icon = icons[i];
+            return (
+              <div key={i} className="reveal p-6 rounded-2xl card-glass card-hover">
+                <div className="flex items-center gap-3 mb-4">
+                  <div className={`w-10 h-10 rounded-xl flex items-center justify-center ${d ? 'bg-amber-500/10 text-amber-400' : 'bg-amber-50 text-amber-600'}`}>
+                    <Icon size={20} />
+                  </div>
+                  <span className={`text-sm font-mono font-bold ${d ? 'text-white/10' : 'text-gray-200'}`}>0{i + 1}</span>
+                </div>
+                <h3 className={`text-base font-bold mb-2 ${d ? 'text-white' : 'text-gray-900'}`}>{point.title}</h3>
+                <p className={`text-sm leading-relaxed ${d ? 'text-gray-400' : 'text-gray-500'}`}>{point.description}</p>
               </div>
-              <p className={`text-sm leading-relaxed ${isDark ? 'text-gray-400' : 'text-gray-500'}`}>
-                {point.description}
-              </p>
-            </div>
-          ))}
+            );
+          })}
         </div>
-      </div>
+      </Container>
     </section>
   );
 }

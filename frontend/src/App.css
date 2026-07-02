@@ -1,15 +1,8 @@
 /* ===== App.css =====
-   Style chinh cho giao dien, card, section, header, footer va cac man hinh public.
-   index.css chua style global ban dau (Tailwind, design tokens, base animations).
-   App.css chua style bo sung cho cac component cu the.
+   Style cho giao dien card, section, header, footer.
 */
 
-/* ===== Section spacing ===== */
-section {
-  position: relative;
-}
-
-/* ===== Card hover micro-interactions ===== */
+/* ===== Card hover ===== */
 .card-hover {
   transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1),
               box-shadow 0.3s cubic-bezier(0.16, 1, 0.3, 1);
@@ -19,87 +12,68 @@ section {
   transform: translateY(-4px);
 }
 
-/* ===== CTA button glow ===== */
+/* ===== Card Glass — Light mode: white card, Dark: dark card ===== */
+.card-glass {
+  background: #ffffff;
+  border: 1px solid #e5e7eb;
+  border-radius: 1rem;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.04), 0 4px 16px rgba(0, 0, 0, 0.03);
+}
+
+.card-glass:hover {
+  border-color: #d1d5db;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.06), 0 1px 3px rgba(0, 0, 0, 0.04);
+}
+
+body.dark .card-glass {
+  background: #151c2c;
+  border: 1px solid rgba(255, 255, 255, 0.06);
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.2), 0 4px 16px rgba(0, 0, 0, 0.15);
+}
+
+body.dark .card-glass:hover {
+  border-color: rgba(255, 255, 255, 0.1);
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.25), 0 1px 3px rgba(0, 0, 0, 0.15);
+}
+
+/* ===== CTA glow ===== */
 .cta-primary {
   position: relative;
   overflow: hidden;
 }
 
-.cta-primary::after {
-  content: '';
-  position: absolute;
-  inset: -2px;
-  background: linear-gradient(135deg, rgba(255, 122, 26, 0.4), rgba(255, 154, 77, 0.2));
-  border-radius: inherit;
-  z-index: -1;
-  opacity: 0;
-  transition: opacity 0.3s ease;
-}
-
-.cta-primary:hover::after {
-  opacity: 1;
-}
-
-/* ===== FAQ accordion transition ===== */
+/* ===== FAQ accordion ===== */
 .faq-answer {
   overflow: hidden;
-  transition: max-height 0.3s cubic-bezier(0.16, 1, 0.3, 1),
-              opacity 0.3s ease;
+  transition: max-height 0.3s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.3s ease;
 }
 
-/* ===== Sticky header glassmorphism ===== */
-.header-scrolled {
-  backdrop-filter: blur(20px) saturate(180%);
-  -webkit-backdrop-filter: blur(20px) saturate(180%);
+/* ===== Section label chip ===== */
+.section-label {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 6px 16px;
+  border-radius: 100px;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
 }
 
-/* ===== Timeline connector ===== */
-.timeline-connector {
-  position: relative;
-}
-
-.timeline-connector::before {
-  content: '';
-  position: absolute;
-  left: 24px;
-  top: 0;
-  bottom: 0;
-  width: 2px;
-  background: linear-gradient(to bottom, var(--color-primary), transparent);
-}
-
-/* ===== Specs table zebra ===== */
-.specs-row:nth-child(even) {
-  background-color: rgba(255, 122, 26, 0.03);
-}
-
-body.dark .specs-row:nth-child(even) {
-  background-color: rgba(255, 255, 255, 0.02);
-}
-
-/* ===== Mobile-safe touch targets ===== */
+/* ===== Mobile touch targets ===== */
 @media (max-width: 768px) {
-  button,
-  a,
-  [role="button"] {
+  button, a, [role="button"] {
     min-height: 44px;
   }
 }
 
-/* ===== Smooth section transitions ===== */
+/* ===== Reduced motion ===== */
 @media (prefers-reduced-motion: reduce) {
-  .reveal,
-  .reveal-left,
-  .reveal-right,
-  .reveal-scale {
-    opacity: 1;
-    transform: none;
-    transition: none;
+  .reveal, .reveal-left, .reveal-right, .reveal-scale {
+    opacity: 1; transform: none; transition: none;
   }
-
-  .animate-float,
-  .animate-float-delayed,
-  .animate-pulse-glow {
+  .animate-float, .animate-float-delayed, .animate-pulse-glow {
     animation: none;
   }
 }

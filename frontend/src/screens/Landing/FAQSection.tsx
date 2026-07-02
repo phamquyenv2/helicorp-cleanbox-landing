@@ -1,64 +1,49 @@
 import { useState } from 'react';
-import { ChevronDown } from 'lucide-react';
+import { ChevronDown, HelpCircle } from 'lucide-react';
 import { FAQ_DATA } from '../../configs/Constants';
+import Container from '../../components/common/Container';
 
 interface FAQSectionProps { isDark: boolean; }
 
 export default function FAQSection({ isDark }: FAQSectionProps) {
   const [openIndex, setOpenIndex] = useState<number | null>(null);
-
-  const toggle = (i: number) => setOpenIndex(openIndex === i ? null : i);
+  const d = isDark;
 
   return (
     <section id="faq" className="py-20 md:py-28">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="text-center mb-16 reveal">
-          <span className={`inline-block text-sm font-semibold uppercase tracking-wider mb-3 ${isDark ? 'text-orange-400' : 'text-[#ff7a1a]'}`}>
-            Câu hỏi thường gặp
-          </span>
-          <h2 className={`text-3xl md:text-4xl lg:text-5xl font-extrabold tracking-tight ${isDark ? 'text-white' : 'text-[#172033]'}`}>
-            FAQ
+      <Container>
+        <div className="text-center mb-14 reveal">
+          <div className={`section-label inline-flex mb-4 ${d ? 'bg-orange-500/10 text-orange-400 border border-orange-500/15' : 'bg-orange-50 text-orange-600 border border-orange-200/60'}`}>
+            <HelpCircle size={13} />
+            <span>CÂU HỎI THƯỜNG GẶP</span>
+          </div>
+          <h2 className={`text-3xl md:text-4xl font-extrabold tracking-tight ${d ? 'text-white' : 'text-[#172033]'}`}>
+            Bạn thắc mắc điều gì?
           </h2>
         </div>
 
-        <div className="max-w-3xl mx-auto space-y-3 stagger-children">
-          {FAQ_DATA.map((faq, i) => (
-            <div
-              key={i}
-              className={`reveal rounded-2xl border overflow-hidden transition-all duration-300 ${
-                isDark
-                  ? 'bg-[#172033] border-white/10 hover:border-white/20'
-                  : 'bg-white border-gray-100 hover:border-gray-200 shadow-sm'
-              }`}
-            >
-              <button
-                onClick={() => toggle(i)}
-                className={`w-full flex items-center justify-between px-6 py-5 text-left cursor-pointer`}
-                aria-expanded={openIndex === i}
-              >
-                <span className={`font-semibold pr-4 ${isDark ? 'text-white' : 'text-[#172033]'}`}>
-                  {faq.question}
-                </span>
-                <ChevronDown
-                  size={20}
-                  className={`shrink-0 transition-transform duration-300 ${
-                    openIndex === i ? 'rotate-180' : ''
-                  } ${isDark ? 'text-gray-400' : 'text-gray-500'}`}
-                />
-              </button>
-              <div
-                className={`overflow-hidden transition-all duration-300 ${
-                  openIndex === i ? 'max-h-96 opacity-100' : 'max-h-0 opacity-0'
-                }`}
-              >
-                <div className={`px-6 pb-5 text-sm leading-relaxed ${isDark ? 'text-gray-400' : 'text-gray-600'}`}>
-                  {faq.answer}
+        <div className="max-w-2xl mx-auto space-y-3 stagger-children">
+          {FAQ_DATA.map((faq, i) => {
+            const isOpen = openIndex === i;
+            return (
+              <div key={i} className={`reveal rounded-2xl overflow-hidden transition-all ${
+                d ? 'bg-[#151c2c] border border-white/6' : 'bg-white border border-gray-100 shadow-sm'
+              } ${isOpen ? (d ? 'ring-1 ring-orange-500/20' : 'ring-1 ring-orange-300/30') : ''}`}>
+                <button onClick={() => setOpenIndex(isOpen ? null : i)}
+                  className="w-full flex items-center justify-between px-5 py-4 text-left cursor-pointer group" aria-expanded={isOpen}>
+                  <span className={`font-semibold text-[15px] pr-4 transition-colors ${isOpen ? 'text-[#ff7a1a]' : d ? 'text-white' : 'text-[#172033]'}`}>
+                    {faq.question}
+                  </span>
+                  <ChevronDown size={18} className={`shrink-0 transition-transform duration-300 ${isOpen ? 'rotate-180 text-[#ff7a1a]' : d ? 'text-gray-500' : 'text-gray-400'}`} />
+                </button>
+                <div className={`overflow-hidden transition-all duration-300 ${isOpen ? 'max-h-96 opacity-100' : 'max-h-0 opacity-0'}`}>
+                  <div className={`px-5 pb-5 text-sm leading-relaxed ${d ? 'text-gray-400' : 'text-gray-500'}`}>{faq.answer}</div>
                 </div>
               </div>
-            </div>
-          ))}
+            );
+          })}
         </div>
-      </div>
+      </Container>
     </section>
   );
 }
