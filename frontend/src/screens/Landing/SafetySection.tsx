@@ -1,9 +1,9 @@
-import { ShieldCheck, Eye, Scale, Lock, MonitorCheck } from 'lucide-react';
+import { ShieldCheck, Eye, Scale, Trash2, Cpu } from 'lucide-react';
 import { SAFETY_SENSORS } from '../../configs/Constants';
 import Container from '../../components/common/Container';
 
 interface SafetySectionProps { isDark: boolean; }
-const sensorIcons = [Eye, Scale, Lock, MonitorCheck];
+const sensorIcons = [Eye, Scale, Trash2, Cpu];
 
 export default function SafetySection({ isDark }: SafetySectionProps) {
   const d = isDark;

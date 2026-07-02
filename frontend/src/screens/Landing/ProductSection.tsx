@@ -47,10 +47,10 @@ export default function ProductSection({ isDark, onCartUpdate }: ProductSectionP
             <span>SẢN PHẨM</span>
           </div>
           <h2 className={`text-3xl md:text-4xl font-extrabold tracking-tight mb-4 ${d ? 'text-white' : 'text-[#172033]'}`}>
-            Chọn CleanBox phù hợp cho boss
+            Chọn Combo Purobot Ultra cho boss
           </h2>
           <p className={`text-base max-w-xl mx-auto ${d ? 'text-gray-400' : 'text-gray-500'}`}>
-            3 phiên bản đáp ứng mọi nhu cầu — từ nhà nuôi 1 bé đến đại gia đình mèo
+            Tối ưu chi phí vận hành, nâng tầm trải nghiệm thông minh cho gia đình bạn
           </p>
         </div>
 

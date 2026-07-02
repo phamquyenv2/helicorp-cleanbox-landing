@@ -3,6 +3,7 @@ import { useEffect, useRef } from 'react';
 /**
  * Intersection Observer hook for scroll-reveal animations.
  * Adds 'visible' class to elements with 'reveal', 'reveal-left', 'reveal-right', 'reveal-scale' classes.
+ * Uses MutationObserver and WeakSet to handle dynamically added elements and Vite HMR properly.
  */
 export function useScrollReveal() {
   useEffect(() => {
@@ -17,10 +18,32 @@ export function useScrollReveal() {
       { threshold: 0.1, rootMargin: '0px 0px -40px 0px' }
     );
 
-    const elements = document.querySelectorAll('.reveal, .reveal-left, .reveal-right, .reveal-scale');
-    elements.forEach((el) => observer.observe(el));
+    const observedSet = new WeakSet();
 
-    return () => observer.disconnect();
+    const observeElements = () => {
+      const elements = document.querySelectorAll('.reveal, .reveal-left, .reveal-right, .reveal-scale');
+      elements.forEach((el) => {
+        if (!observedSet.has(el)) {
+          observedSet.add(el);
+          observer.observe(el);
+        }
+      });
+    };
+
+    // Initial observation
+    observeElements();
+
+    // Watch for dynamically added elements (e.g. via HMR or React Router)
+    const mutationObserver = new MutationObserver(() => {
+      observeElements();
+    });
+
+    mutationObserver.observe(document.body, { childList: true, subtree: true });
+
+    return () => {
+      observer.disconnect();
+      mutationObserver.disconnect();
+    };
   }, []);
 }
 

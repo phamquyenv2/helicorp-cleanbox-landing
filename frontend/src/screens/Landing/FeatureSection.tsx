@@ -1,75 +1,148 @@
-import { Sparkles, Wind, ShieldCheck, Smartphone, Maximize, Wrench } from 'lucide-react';
+import { useEffect, useRef, useState } from 'react';
+import { Camera, Activity, PackageCheck, Users, ShieldCheck, Maximize, Wind, Moon, Droplets, Sparkles, ArrowUpRight } from 'lucide-react';
 import { FEATURES } from '../../configs/Constants';
 import Container from '../../components/common/Container';
+import productImg from '../../assets/camera quan sát mèo.webp';
+
+// Import Assets for cards
+import imgHealth from '../../assets/Camera AI theo dõi tình trạng sức khỏe qua phân.webp';
+import gifSeal from '../../assets/Niêm phong tự động.gif';
+import imgMultiCat from '../../assets/Camera AI nhận diện nhiều mèo.webp';
+import imgCabin from '../../assets/20 ngày k dọn.gif';
+import imgDeodor from '../../assets/Hệ thống khử mùi 4 tầng.webp';
+import imgQuiet from '../../assets/Vận hành êm ỉ không ồn.webp';
+import gifPad from '../../assets/Nâng cấp lót đáy.gif';
+import imgSensors from '../../assets/PETKIT Purobot Ultra.webp';
+
+const featureImages: string[] = [
+  productImg,   // 0: AI Camera
+  imgHealth,    // 1: Health
+  gifSeal,      // 2: Auto-sealing
+  imgMultiCat,  // 3: Multi-cat
+  imgSensors,   // 4: 20 Sensors
+  imgCabin,     // 5: 70L Cabin
+  imgDeodor,    // 6: Deodorization
+  imgQuiet,     // 7: Quiet
+  gifPad,       // 8: Bottom Pad
+];
 
 interface FeatureSectionProps { isDark: boolean; }
 
-const iconMap: Record<string, React.ComponentType<{ size?: number; className?: string }>> = {
-  Sparkles, Wind, ShieldCheck, Smartphone, Maximize, Wrench,
+const iconMap: Record<string, React.ComponentType<{ size?: number; className?: string; strokeWidth?: number | string }>> = {
+  Camera, Activity, PackageCheck, Users, ShieldCheck, Maximize, Wind, Moon, Droplets, Sparkles
 };
-
-const iconColors = [
-  { text: 'text-orange-500', bg: 'bg-orange-50', darkBg: 'bg-orange-500/10', accent: 'bg-orange-500', glow: 'group-hover:shadow-orange-500/20' },
-  { text: 'text-teal-500', bg: 'bg-teal-50', darkBg: 'bg-teal-500/10', accent: 'bg-teal-500', glow: 'group-hover:shadow-teal-500/20' },
-  { text: 'text-blue-500', bg: 'bg-blue-50', darkBg: 'bg-blue-500/10', accent: 'bg-blue-500', glow: 'group-hover:shadow-blue-500/20' },
-  { text: 'text-violet-500', bg: 'bg-violet-50', darkBg: 'bg-violet-500/10', accent: 'bg-violet-500', glow: 'group-hover:shadow-violet-500/20' },
-  { text: 'text-emerald-500', bg: 'bg-emerald-50', darkBg: 'bg-emerald-500/10', accent: 'bg-emerald-500', glow: 'group-hover:shadow-emerald-500/20' },
-  { text: 'text-rose-500', bg: 'bg-rose-50', darkBg: 'bg-rose-500/10', accent: 'bg-rose-500', glow: 'group-hover:shadow-rose-500/20' },
-];
 
 export default function FeatureSection({ isDark }: FeatureSectionProps) {
   const d = isDark;
-  
+  const [activeStep, setActiveStep] = useState(0);
+  const stepRefs = useRef<(HTMLDivElement | null)[]>([]);
+
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            const index = Number(entry.target.getAttribute('data-index'));
+            setActiveStep(index);
+          }
+        });
+      },
+      { rootMargin: '-40% 0px -40% 0px', threshold: 0 }
+    );
+
+    stepRefs.current.forEach((ref) => {
+      if (ref) observer.observe(ref);
+    });
+
+    return () => observer.disconnect();
+  }, []);
+
   return (
-    <section id="features" className={`py-20 md:py-28 ${d ? 'bg-[#0c111d]' : 'bg-[#fcfaf9]'}`}>
+    <section id="features" className={`relative py-20 ${d ? 'bg-[#0a0f18]' : 'bg-[#f8f9fa]'}`}>
       <Container>
-        <div className="text-center mb-16 md:mb-20">
-          <div className={`inline-flex items-center px-4 py-1.5 rounded-full text-sm font-bold tracking-wide mb-5 ${
-            d ? 'bg-teal-500/10 text-teal-400 border border-teal-500/20' : 'bg-teal-50 text-teal-600 border border-teal-200/60'
-          }`}>
-            TÍNH NĂNG NỔI BẬT
+        <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 mb-16 md:mb-24 reveal">
+          <div className="max-w-2xl">
+            <h2 className={`text-[2.5rem] md:text-[3.5rem] font-extrabold tracking-tighter leading-[1.1] mb-6 ${d ? 'text-white' : 'text-[#111827]'}`}>
+              Công nghệ tiên phong. <br className="hidden md:block" />
+              <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#ff7a1a] to-orange-400">Trải nghiệm rảnh tay.</span>
+            </h2>
+            <p className={`text-lg md:text-xl leading-relaxed ${d ? 'text-gray-400' : 'text-gray-600'}`}>
+              Khám phá 9 tính năng đột phá được trang bị trên CleanBox Pro Ultra, tái định nghĩa hoàn toàn tiêu chuẩn chăm sóc thú cưng hiện đại.
+            </p>
           </div>
-          <h2 className={`text-[2rem] sm:text-[2.5rem] lg:text-[3rem] font-extrabold tracking-tight leading-tight mb-5 ${d ? 'text-white' : 'text-[#172033]'}`}>
-            Tại sao chọn CleanBox Pro?
-          </h2>
-          <p className={`text-base sm:text-lg max-w-[600px] mx-auto ${d ? 'text-gray-400' : 'text-gray-500'}`}>
-            Công nghệ tiên tiến được thiết kế tinh tế giúp cuộc sống của sen và boss dễ dàng hơn mỗi ngày.
-          </p>
+          <div className="shrink-0 pb-2">
+            <a href="#buy" className={`inline-flex items-center gap-2 font-semibold text-sm uppercase tracking-wider ${d ? 'text-[#ff7a1a] hover:text-orange-400' : 'text-[#e56a10] hover:text-[#ff7a1a]'} transition-colors`}>
+              Đặt hàng ngay <ArrowUpRight size={16} />
+            </a>
+          </div>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 lg:gap-8">
-          {FEATURES.map((feature, i) => {
-            const Icon = iconMap[feature.icon] || Sparkles;
-            const color = iconColors[i % iconColors.length];
-            
-            return (
-              <div 
-                key={i} 
-                className={`group relative overflow-hidden p-8 rounded-[2rem] transition-all duration-300 hover:-translate-y-1 hover:shadow-xl ${color.glow} ${
-                  d 
-                    ? 'bg-[#111827] border border-white/5 hover:bg-[#151c2c] shadow-black/20' 
-                    : 'bg-white border border-gray-100 hover:border-transparent'
-                }`}
-              >
-                {/* Accent line on hover */}
-                <div className={`absolute top-0 left-0 w-full h-1 opacity-0 group-hover:opacity-100 transition-opacity duration-300 ${color.accent}`} />
-                
-                <div className={`w-14 h-14 rounded-2xl flex items-center justify-center mb-6 transition-transform duration-300 group-hover:scale-110 ${
-                  d ? color.darkBg : color.bg
-                } ${color.text}`}>
-                  <Icon size={28} />
+        <div className="relative flex flex-col md:flex-row items-start">
+
+          {/* Left: Scrollable Content */}
+          <div className="w-full md:w-1/2 relative z-10 px-4 md:px-0">
+            {FEATURES.map((feature, i) => {
+              const Icon = iconMap[feature.icon] || Sparkles;
+              const isActive = activeStep === i;
+
+              return (
+                <div
+                  key={i}
+                  ref={el => { stepRefs.current[i] = el; }}
+                  data-index={i}
+                  className="min-h-[60vh] md:min-h-screen flex items-center justify-start py-10 md:py-20 transition-opacity duration-700 snap-center"
+                  style={{ opacity: isActive ? 1 : 0.2 }}
+                >
+                  <div className={`p-8 md:p-12 rounded-[2.5rem] w-full max-w-[500px] transition-all duration-700 relative ${isActive ? 'scale-100 translate-x-0' : 'scale-95 -translate-x-4'} ${d ? 'bg-[#151c2c]/80 backdrop-blur-xl border border-white/10 shadow-2xl shadow-black/50' : 'bg-white/80 backdrop-blur-xl border border-gray-100 shadow-2xl shadow-gray-200/50'
+                    }`}>
+                    {/* Number Badge at Top Right Corner */}
+                    <div className={`absolute top-6 right-6 md:top-8 md:right-8 font-mono text-sm font-bold px-3 py-1 rounded-full tracking-widest ${d ? 'bg-[#ff7a1a]/10 text-[#ff7a1a]' : 'bg-orange-50 text-[#e56a10]'}`}>
+                      {String(i + 1).padStart(2, '0')}
+                    </div>
+
+                    <div className="flex items-center gap-4 mb-8">
+                      <div className={`w-16 h-16 rounded-2xl flex items-center justify-center shadow-inner ${d ? 'bg-gradient-to-br from-[#ff7a1a]/20 to-orange-500/10 text-[#ff7a1a]' : 'bg-gradient-to-br from-orange-50 to-[#ff7a1a]/10 text-[#e56a10]'}`}>
+                        <Icon size={32} strokeWidth={1.5} />
+                      </div>
+                    </div>
+                    <h3 className={`text-2xl md:text-[2rem] font-extrabold mb-4 leading-tight tracking-tight ${d ? 'text-white' : 'text-gray-900'}`}>{feature.title}</h3>
+                    <p className={`text-base md:text-lg leading-relaxed whitespace-pre-line ${d ? 'text-gray-400' : 'text-gray-600'}`}>{feature.description}</p>
+                  </div>
                 </div>
-                
-                <h3 className={`text-xl font-bold mb-3 ${d ? 'text-white' : 'text-gray-900'}`}>
-                  {feature.title}
-                </h3>
-                
-                <p className={`text-[15px] leading-relaxed ${d ? 'text-gray-400' : 'text-gray-500'}`}>
-                  {feature.description}
-                </p>
-              </div>
-            );
-          })}
+              );
+            })}
+          </div>
+
+          {/* Right: Sticky Image Container */}
+          <div className="hidden md:flex w-1/2 sticky top-0 h-screen items-center justify-center pl-10 lg:pl-20">
+            <div className={`relative w-full max-w-[600px] aspect-[4/5] md:aspect-square rounded-[3rem] overflow-hidden shadow-2xl transition-all duration-1000 ${d ? 'bg-[#0e1525] border border-white/5 shadow-black/80' : 'bg-gray-100 border border-gray-200 shadow-gray-300/50'}`}>
+
+              {/* Background Glow */}
+              <div className="absolute inset-0 bg-gradient-to-tr from-[#ff7a1a]/20 via-transparent to-orange-500/10 animate-pulse-glow" />
+
+              {/* Images crossfade */}
+              {featureImages.map((imgSrc, idx) => {
+                const isProductImg = imgSrc === productImg;
+                return (
+                  <div
+                    key={idx}
+                    className={`absolute inset-0 flex items-center justify-center transition-all duration-1000 ease-in-out ${activeStep === idx ? 'opacity-100 scale-100 z-10' : 'opacity-0 scale-105 z-0'}`}
+                  >
+                    <img
+                      src={imgSrc}
+                      alt={FEATURES[idx].title}
+                      className={`w-full h-full transition-transform duration-1000 ${isProductImg ? 'object-contain mix-blend-screen scale-90 drop-shadow-2xl' : 'object-cover'}`}
+                    />
+                    {/* Gradient Overlay for better contrast */}
+                    {!isProductImg && (
+                      <div className={`absolute inset-0 bg-gradient-to-t ${d ? 'from-[#0e1525]/80 via-transparent' : 'from-gray-100/80 via-transparent'} to-transparent`} />
+                    )}
+                  </div>
+                );
+              })}
+            </div>
+          </div>
+
         </div>
       </Container>
     </section>

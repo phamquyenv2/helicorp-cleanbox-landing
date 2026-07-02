@@ -1,5 +1,5 @@
 import { useState, useRef, useEffect, useCallback } from 'react';
-import { MessageCircle, X, Send, Bot, User } from 'lucide-react';
+import { MessageCircle, X, Send, Bot, User, ChevronUp } from 'lucide-react';
 import { CHATBOT_SUGGESTIONS } from '../../configs/Constants';
 import { getLocalChatReply } from '../../configs/Apis';
 import { getChatHistory, saveChatHistory } from '../../reducers/AppReducer';
@@ -14,9 +14,23 @@ export default function ChatbotWidget({ isDark }: ChatbotWidgetProps) {
   const [messages, setMessages] = useState<ChatMessage[]>([]);
   const [input, setInput] = useState('');
   const [isTyping, setIsTyping] = useState(false);
+  const [showScrollTop, setShowScrollTop] = useState(false);
   const messagesEndRef = useRef<HTMLDivElement>(null);
   const inputRef = useRef<HTMLInputElement>(null);
   const d = isDark;
+
+  // Track scroll for Scroll to Top button
+  useEffect(() => {
+    const handleScroll = () => {
+      setShowScrollTop(window.scrollY > 500);
+    };
+    window.addEventListener('scroll', handleScroll, { passive: true });
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, []);
+
+  const scrollToTop = () => {
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  };
 
   // Load chat history
   useEffect(() => {
@@ -175,19 +189,33 @@ export default function ChatbotWidget({ isDark }: ChatbotWidgetProps) {
         </form>
       </div>
 
-      {/* FAB Button */}
-      <button
-        id="chatbot-toggle"
-        onClick={() => setIsOpen(!isOpen)}
-        className={`fixed bottom-4 right-4 sm:right-6 z-50 w-14 h-14 rounded-full flex items-center justify-center shadow-xl transition-all cursor-pointer ${
-          isOpen
-            ? d ? 'bg-white/10 text-white' : 'bg-gray-200 text-gray-600'
-            : 'bg-gradient-to-r from-[#ff7a1a] to-[#ff9a4d] text-white shadow-orange-500/30 hover:shadow-orange-500/50 hover:scale-110 animate-pulse-glow'
-        }`}
-        aria-label={isOpen ? 'Đóng chat' : 'Mở chat'}
-      >
-        {isOpen ? <X size={22} /> : <MessageCircle size={22} />}
-      </button>
+      {/* Floating Action Buttons Container */}
+      <div className="fixed bottom-4 right-4 sm:right-6 z-50 flex flex-col items-center gap-3 pointer-events-none">
+        {/* Scroll To Top Button */}
+        <button
+          onClick={scrollToTop}
+          className={`w-11 h-11 rounded-full flex items-center justify-center bg-[#ff7a1a] text-white shadow-lg border border-orange-400 transition-all duration-300 pointer-events-auto hover:bg-[#e56a10] hover:-translate-y-1 ${
+            showScrollTop ? 'translate-y-0 opacity-100 scale-100' : 'translate-y-10 opacity-0 scale-90 pointer-events-none'
+          }`}
+          aria-label="Lên đầu trang"
+        >
+          <ChevronUp size={22} />
+        </button>
+
+        {/* Chat FAB Button */}
+        <button
+          id="chatbot-toggle"
+          onClick={() => setIsOpen(!isOpen)}
+          className={`w-14 h-14 rounded-full flex items-center justify-center shadow-xl transition-all cursor-pointer pointer-events-auto ${
+            isOpen
+              ? d ? 'bg-white/10 text-white' : 'bg-gray-200 text-gray-600'
+              : 'bg-gradient-to-r from-[#ff7a1a] to-[#ff9a4d] text-white shadow-orange-500/30 hover:shadow-orange-500/50 hover:scale-110 animate-pulse-glow'
+          }`}
+          aria-label={isOpen ? 'Đóng chat' : 'Mở chat'}
+        >
+          {isOpen ? <X size={22} /> : <MessageCircle size={22} />}
+        </button>
+      </div>
     </>
   );
 }

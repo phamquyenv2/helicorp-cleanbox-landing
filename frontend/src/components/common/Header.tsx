@@ -1,7 +1,7 @@
-import { useState, useEffect, useCallback } from 'react';
+import { useState, useEffect, useCallback, useRef } from 'react';
 import { Moon, Sun, ShoppingCart, Menu, X } from 'lucide-react';
 import { getTheme, setTheme } from '../../reducers/AppReducer';
-import Container from './Container';
+import logoUrl from '../../assets/logo.webp';
 
 interface HeaderProps {
   onCartClick: () => void;
@@ -13,6 +13,8 @@ export default function Header({ onCartClick, onTrack, cartItems }: HeaderProps)
   const [isDark, setIsDark] = useState(getTheme() === 'dark');
   const [isScrolled, setIsScrolled] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+  const [hoverStyle, setHoverStyle] = useState({ left: 0, width: 0, opacity: 0 });
+  const navRef = useRef<HTMLElement>(null);
 
   useEffect(() => {
     function handleScroll() {
@@ -43,45 +45,79 @@ export default function Header({ onCartClick, onTrack, cartItems }: HeaderProps)
     if (el) el.scrollIntoView({ behavior: 'smooth', block: 'start' });
   };
 
+  const handleNavHover = (e: React.MouseEvent<HTMLButtonElement>) => {
+    if (!navRef.current) return;
+    const navRect = navRef.current.getBoundingClientRect();
+    const btnRect = e.currentTarget.getBoundingClientRect();
+    setHoverStyle({
+      left: btnRect.left - navRect.left,
+      width: btnRect.width,
+      opacity: 1,
+    });
+  };
+
+  const handleNavLeave = () => {
+    setHoverStyle((prev) => ({ ...prev, opacity: 0 }));
+  };
+
   const d = isDark;
 
   return (
     <header
       id="main-header"
-      className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
+      className={`fixed z-50 transition-all duration-700 ease-[cubic-bezier(0.22,1,0.36,1)] ${
         isScrolled
-          ? d
-            ? 'bg-[#0c111d]/90 backdrop-blur-xl border-b border-white/[0.06]'
-            : 'bg-white/85 backdrop-blur-xl border-b border-gray-200/60 shadow-sm'
-          : 'bg-transparent'
+          ? `top-2 md:top-4 left-4 right-4 md:left-1/2 md:-translate-x-1/2 md:w-[860px] md:right-auto rounded-2xl md:rounded-full ${
+              d
+                ? 'bg-[#0c111d]/75 backdrop-blur-lg border border-white/[0.08] shadow-2xl shadow-black/40'
+                : 'bg-white/80 backdrop-blur-lg border border-gray-200/80 shadow-lg shadow-gray-900/5'
+            }`
+          : 'top-0 left-0 right-0 md:left-1/2 md:-translate-x-1/2 md:right-auto w-full bg-transparent border-b border-transparent rounded-none'
       }`}
     >
-      <Container>
-        <div className="flex items-center justify-between h-16">
+      <div className={`mx-auto w-full transition-all duration-700 ${isScrolled ? 'px-2' : 'max-w-7xl px-4 sm:px-6 lg:px-8'}`}>
+        <div className={`flex items-center justify-between transition-all duration-700 ${isScrolled ? 'h-14' : 'h-16 md:h-20'}`}>
+          
           {/* Logo */}
           <a
             href="#"
-            className="flex items-center gap-2.5 group shrink-0"
+            className={`flex items-center gap-2.5 group shrink-0 transition-all duration-700 ${isScrolled ? 'ml-2' : ''}`}
             onClick={(e) => { e.preventDefault(); window.scrollTo({ top: 0, behavior: 'smooth' }); }}
           >
-            <div className="w-8 h-8 rounded-lg bg-gradient-to-br from-[#ff7a1a] to-[#e56a10] flex items-center justify-center shadow-md shadow-orange-500/20 group-hover:shadow-orange-500/30 transition-shadow">
-              <span className="text-white font-bold text-xs tracking-tight">CB</span>
-            </div>
-            <span className={`font-semibold text-[15px] tracking-tight ${d ? 'text-white' : 'text-[#172033]'}`}>
-              Clean<span className="text-[#ff7a1a]">Box</span> Pro
-            </span>
+            <img 
+              src={logoUrl} 
+              alt="Logo" 
+              className="h-7 md:h-8 w-auto object-contain group-hover:scale-105 transition-transform duration-300" 
+            />
           </a>
 
           {/* Desktop Nav */}
-          <nav className="hidden md:flex items-center gap-1">
+          <nav 
+            ref={navRef}
+            onMouseLeave={handleNavLeave}
+            className="hidden md:flex items-center relative"
+          >
+            {/* Sliding Glow Background */}
+            <div 
+              className={`absolute h-8 rounded-lg pointer-events-none transition-all duration-1000 ease-[cubic-bezier(0.22,1,0.36,1)] ${
+                d ? 'bg-white/[0.08]' : 'bg-black/[0.04]'
+              }`}
+              style={{
+                left: hoverStyle.left,
+                width: hoverStyle.width,
+                opacity: hoverStyle.opacity,
+                transform: 'translateY(0)', // alignment fixes
+              }}
+            />
             {navItems.map((item) => (
               <button
                 key={item.href}
+                onMouseEnter={handleNavHover}
                 onClick={() => { scrollToSection(item.href); onTrack('cta_click', { eventName: `nav_${item.label}`, section: 'header' }); }}
-                className={`px-3 py-1.5 rounded-lg text-[13px] font-medium transition-colors cursor-pointer ${
+                className={`relative z-10 px-3.5 py-1.5 rounded-lg text-[13px] font-medium transition-colors cursor-pointer ${
                   d
-                    ? 'text-gray-400 hover:text-white hover:bg-white/[0.06]'
-                    : 'text-gray-600 hover:text-[#172033] hover:bg-black/[0.04]'
+                    ? 'text-gray-400 hover:text-white'
+                    : 'text-gray-600 hover:text-[#172033]'
                 }`}
               >
                 {item.label}
@@ -90,14 +126,14 @@ export default function Header({ onCartClick, onTrack, cartItems }: HeaderProps)
           </nav>
 
           {/* Right Actions */}
-          <div className="flex items-center gap-1">
+          <div className={`flex items-center gap-1 transition-all duration-700 ${isScrolled ? 'mr-1' : ''}`}>
             {/* Dark mode toggle */}
             <button
               id="dark-mode-toggle"
               onClick={toggleTheme}
-              className={`p-2 rounded-lg transition-colors cursor-pointer ${
+              className={`p-2 rounded-full transition-colors cursor-pointer ${
                 d
-                  ? 'text-gray-400 hover:text-yellow-300 hover:bg-white/[0.06]'
+                  ? 'text-gray-400 hover:text-yellow-300 hover:bg-white/[0.08]'
                   : 'text-gray-500 hover:text-gray-700 hover:bg-black/[0.04]'
               }`}
               aria-label="Toggle dark mode"
@@ -109,9 +145,9 @@ export default function Header({ onCartClick, onTrack, cartItems }: HeaderProps)
             <button
               id="cart-button"
               onClick={() => { onCartClick(); onTrack('cta_click', { eventName: 'cart_open', section: 'header' }); }}
-              className={`p-2 rounded-lg transition-colors relative cursor-pointer ${
+              className={`p-2 rounded-full transition-colors relative cursor-pointer ${
                 d
-                  ? 'text-gray-400 hover:text-white hover:bg-white/[0.06]'
+                  ? 'text-gray-400 hover:text-white hover:bg-white/[0.08]'
                   : 'text-gray-500 hover:text-gray-700 hover:bg-black/[0.04]'
               }`}
               aria-label="Open cart"
@@ -127,7 +163,9 @@ export default function Header({ onCartClick, onTrack, cartItems }: HeaderProps)
             {/* CTA */}
             <button
               onClick={() => { scrollToSection('#lead-form'); onTrack('cta_click', { eventName: 'header_cta', section: 'header' }); }}
-              className="hidden sm:block ml-2 px-4 py-2 bg-[#ff7a1a] hover:bg-[#e56a10] text-white text-sm font-semibold rounded-lg shadow-sm hover:shadow-md active:scale-[0.97] transition-all cursor-pointer"
+              className={`hidden sm:block px-4 bg-[#ff7a1a] hover:bg-[#e56a10] text-white text-sm font-semibold rounded-full shadow-sm hover:shadow-md active:scale-[0.97] transition-all cursor-pointer ${
+                isScrolled ? 'py-1.5 ml-1' : 'py-2 ml-2'
+              }`}
             >
               Nhận tư vấn
             </button>
@@ -136,8 +174,8 @@ export default function Header({ onCartClick, onTrack, cartItems }: HeaderProps)
             <button
               id="mobile-menu-toggle"
               onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
-              className={`md:hidden p-2 rounded-lg transition-colors cursor-pointer ${
-                d ? 'text-gray-400 hover:bg-white/[0.06]' : 'text-gray-500 hover:bg-black/[0.04]'
+              className={`md:hidden p-2 rounded-full transition-colors cursor-pointer ${
+                d ? 'text-gray-400 hover:bg-white/[0.08]' : 'text-gray-500 hover:bg-black/[0.04]'
               }`}
               aria-label="Toggle menu"
             >
@@ -145,36 +183,34 @@ export default function Header({ onCartClick, onTrack, cartItems }: HeaderProps)
             </button>
           </div>
         </div>
-      </Container>
+      </div>
 
       {/* Mobile Menu */}
       <div
-        className={`md:hidden transition-all duration-300 overflow-hidden ${
-          isMobileMenuOpen ? 'max-h-96 opacity-100' : 'max-h-0 opacity-0'
-        }`}
+        className={`md:hidden transition-all duration-300 overflow-hidden absolute left-0 right-0 top-full mt-2 rounded-2xl mx-4 shadow-xl ${
+          isMobileMenuOpen ? 'max-h-96 opacity-100 border' : 'max-h-0 opacity-0 border-transparent'
+        } ${d ? 'bg-[#151c2c] border-white/10' : 'bg-white border-gray-100'}`}
       >
-        <div className={`border-t ${d ? 'bg-[#0c111d] border-white/[0.06]' : 'bg-white border-gray-100'}`}>
-          <Container className="py-3 space-y-0.5">
-            {navItems.map((item) => (
-              <button
-                key={item.href}
-                onClick={() => scrollToSection(item.href)}
-                className={`block w-full text-left px-4 py-3 rounded-lg text-sm font-medium transition-colors cursor-pointer ${
-                  d
-                    ? 'text-gray-400 hover:text-white hover:bg-white/[0.06]'
-                    : 'text-gray-600 hover:text-[#172033] hover:bg-gray-50'
-                }`}
-              >
-                {item.label}
-              </button>
-            ))}
+        <div className="py-2 px-2 space-y-0.5">
+          {navItems.map((item) => (
             <button
-              onClick={() => scrollToSection('#lead-form')}
-              className="block w-full px-4 py-3 bg-[#ff7a1a] hover:bg-[#e56a10] text-white text-sm font-semibold rounded-lg text-center cursor-pointer mt-2 transition-colors"
+              key={item.href}
+              onClick={() => scrollToSection(item.href)}
+              className={`block w-full text-left px-4 py-3 rounded-xl text-sm font-medium transition-colors cursor-pointer ${
+                d
+                  ? 'text-gray-300 hover:text-white hover:bg-white/[0.06]'
+                  : 'text-gray-600 hover:text-[#172033] hover:bg-gray-50'
+              }`}
             >
-              Nhận tư vấn miễn phí
+              {item.label}
             </button>
-          </Container>
+          ))}
+          <button
+            onClick={() => scrollToSection('#lead-form')}
+            className="block w-full px-4 py-3 bg-[#ff7a1a] hover:bg-[#e56a10] text-white text-sm font-semibold rounded-xl text-center cursor-pointer mt-2 transition-colors"
+          >
+            Nhận tư vấn miễn phí
+          </button>
         </div>
       </div>
     </header>
