@@ -78,7 +78,6 @@ export default function Header({ onCartClick, onTrack, cartItems }: HeaderProps)
       <div className={`mx-auto w-full transition-all duration-700 ${isScrolled ? 'px-2' : 'max-w-7xl px-4 sm:px-6 lg:px-8'}`}>
         <div className={`flex items-center justify-between transition-all duration-700 ${isScrolled ? 'h-14' : 'h-16 md:h-20'}`}>
           
-          {/* Logo */}
           <a
             href="#"
             className={`flex items-center gap-2.5 group shrink-0 transition-all duration-700 ${isScrolled ? 'ml-2' : ''}`}
@@ -91,13 +90,11 @@ export default function Header({ onCartClick, onTrack, cartItems }: HeaderProps)
             />
           </a>
 
-          {/* Desktop Nav */}
           <nav 
             ref={navRef}
             onMouseLeave={handleNavLeave}
             className="hidden md:flex items-center relative"
           >
-            {/* Sliding Glow Background */}
             <div 
               className={`absolute h-8 rounded-lg pointer-events-none transition-all duration-1000 ease-[cubic-bezier(0.22,1,0.36,1)] ${
                 d ? 'bg-white/[0.08]' : 'bg-black/[0.04]'
@@ -106,7 +103,7 @@ export default function Header({ onCartClick, onTrack, cartItems }: HeaderProps)
                 left: hoverStyle.left,
                 width: hoverStyle.width,
                 opacity: hoverStyle.opacity,
-                transform: 'translateY(0)', // alignment fixes
+                transform: 'translateY(0)',
               }}
             />
             {navItems.map((item) => (
@@ -125,9 +122,7 @@ export default function Header({ onCartClick, onTrack, cartItems }: HeaderProps)
             ))}
           </nav>
 
-          {/* Right Actions */}
           <div className={`flex items-center gap-1 transition-all duration-700 ${isScrolled ? 'mr-1' : ''}`}>
-            {/* Dark mode toggle */}
             <button
               id="dark-mode-toggle"
               onClick={toggleTheme}
@@ -141,7 +136,6 @@ export default function Header({ onCartClick, onTrack, cartItems }: HeaderProps)
               {d ? <Sun size={17} /> : <Moon size={17} />}
             </button>
 
-            {/* Cart */}
             <button
               id="cart-button"
               onClick={() => { onCartClick(); onTrack('cta_click', { eventName: 'cart_open', section: 'header' }); }}
@@ -160,7 +154,6 @@ export default function Header({ onCartClick, onTrack, cartItems }: HeaderProps)
               )}
             </button>
 
-            {/* CTA */}
             <button
               onClick={() => { scrollToSection('#lead-form'); onTrack('cta_click', { eventName: 'header_cta', section: 'header' }); }}
               className={`hidden sm:block px-4 bg-[#ff7a1a] hover:bg-[#e56a10] text-white text-sm font-semibold rounded-full shadow-sm hover:shadow-md active:scale-[0.97] transition-all cursor-pointer ${
@@ -170,7 +163,6 @@ export default function Header({ onCartClick, onTrack, cartItems }: HeaderProps)
               Nhận tư vấn
             </button>
 
-            {/* Mobile Menu Toggle */}
             <button
               id="mobile-menu-toggle"
               onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
@@ -185,7 +177,6 @@ export default function Header({ onCartClick, onTrack, cartItems }: HeaderProps)
         </div>
       </div>
 
-      {/* Mobile Menu */}
       <div
         className={`md:hidden transition-all duration-300 overflow-hidden absolute left-0 right-0 top-full mt-2 rounded-2xl mx-4 shadow-xl ${
           isMobileMenuOpen ? 'max-h-96 opacity-100 border' : 'max-h-0 opacity-0 border-transparent'

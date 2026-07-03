@@ -23,14 +23,12 @@ export default function App() {
   const [cart, setCart] = useState<CartItem[]>([]);
   const [isCartOpen, setIsCartOpen] = useState(false);
 
-  // Initialize theme & cart
   useEffect(() => {
     const theme = initTheme();
     setIsDark(theme === 'dark');
     setCart(getCart());
   }, []);
 
-  // Listen for theme changes
   useEffect(() => {
     const observer = new MutationObserver(() => {
       setIsDark(document.body.classList.contains('dark'));
@@ -39,12 +37,10 @@ export default function App() {
     return () => observer.disconnect();
   }, []);
 
-  // Scroll reveal animations
   useScrollReveal();
 
-  // Tracking stub (will be replaced with real tracking in later commits)
   const handleTrack = useCallback((_eventType: string, _extra?: Record<string, unknown>) => {
-    // Will be implemented with backend integration
+
   }, []);
 
   const handleCartUpdate = useCallback((updatedCart?: CartItem[]) => {

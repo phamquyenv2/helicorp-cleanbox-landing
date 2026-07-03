@@ -1,4 +1,4 @@
-/* ===== Product Types ===== */
+
 export interface Product {
   id: string;
   name: string;
@@ -12,13 +12,11 @@ export interface Product {
   isActive: boolean;
 }
 
-/* ===== Cart Types ===== */
 export interface CartItem {
   product: Product;
   quantity: number;
 }
 
-/* ===== Lead Form Types ===== */
 export interface LeadFormData {
   fullName: string;
   phone: string;
@@ -29,7 +27,6 @@ export interface LeadFormData {
   message?: string;
 }
 
-/* ===== Chat Types ===== */
 export interface ChatMessage {
   id: string;
   role: 'user' | 'bot';
@@ -37,7 +34,6 @@ export interface ChatMessage {
   timestamp: number;
 }
 
-/* ===== Event Tracking Types ===== */
 export interface TrackingEvent {
   sessionId: string;
   eventType: string;
@@ -48,14 +44,12 @@ export interface TrackingEvent {
   metadata?: string;
 }
 
-/* ===== API Response ===== */
 export interface ApiResponse<T = unknown> {
   success: boolean;
   message: string;
   data?: T;
 }
 
-/* ===== Toast Types ===== */
 export type ToastType = 'success' | 'error' | 'info' | 'warning';
 
 export interface Toast {

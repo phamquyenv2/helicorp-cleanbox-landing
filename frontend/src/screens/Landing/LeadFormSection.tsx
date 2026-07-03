@@ -15,7 +15,6 @@ interface LeadFormSectionProps {
   isDark: boolean;
 }
 
-// Zod validation schema
 const phoneRegex = /(84|0[3|5|7|8|9])+([0-9]{8})\b/;
 
 const leadFormSchema = z.object({
@@ -78,19 +77,16 @@ export default function LeadFormSection({ isDark }: LeadFormSectionProps) {
   };
 
   return (
-    <section id="lead-form" className={`py-20 md:py-28 ${isDark ? 'bg-[#0e1525]' : 'bg-orange-50/40'}`}>
+    <section id="lead-form" className={`py-20 md:py-28 ${isDark ? 'bg-[#0b101a]' : 'bg-white'}`}>
       <Container>
         <div className="max-w-4xl mx-auto">
           <div className={`rounded-2xl shadow-xl overflow-hidden reveal ${isDark ? 'bg-[#151c2c] border border-white/5' : 'bg-white border border-gray-100 shadow-orange-500/5'
             }`}>
             <div className="grid md:grid-cols-5 h-full">
 
-              {/* Left side: Info */}
               <div className={`md:col-span-2 relative p-8 md:p-10 flex flex-col justify-center text-white overflow-hidden ${isDark ? 'border-r border-white/5' : ''
                 }`}>
-                {/* Background Image */}
-                <img src={tuvanBg} alt="Tư vấn" className="absolute inset-0 w-full h-full object-cover z-0" />
-                {/* Overlay for text readability */}
+                <img src={tuvanBg} alt="Tư vấn" loading="lazy" className="absolute inset-0 w-full h-full object-cover z-0" />
                 <div className={`absolute inset-0 z-0 ${isDark ? 'bg-[#0e1525]/80' : 'bg-[#ff7a1a]/85'}`}></div>
 
                 <div className="relative z-10 h-full flex flex-col">
@@ -110,7 +106,6 @@ export default function LeadFormSection({ isDark }: LeadFormSectionProps) {
                 </div>
               </div>
 
-              {/* Right side: Form */}
               <div className="md:col-span-3 p-8 md:p-10">
                 {isSuccess ? (
                   <div className="h-full flex flex-col items-center justify-center text-center animate-toast-in">
@@ -132,7 +127,6 @@ export default function LeadFormSection({ isDark }: LeadFormSectionProps) {
                 ) : (
                   <form onSubmit={handleSubmit(onSubmit)} className="space-y-5">
                     <div className="grid grid-cols-1 sm:grid-cols-2 gap-5">
-                      {/* Full Name */}
                       <div>
                         <label className={`block text-sm font-medium mb-1.5 ${isDark ? 'text-gray-300' : 'text-gray-700'}`}>
                           Họ và tên *
@@ -151,7 +145,6 @@ export default function LeadFormSection({ isDark }: LeadFormSectionProps) {
                         {errors.fullName && <p className="mt-1.5 text-sm text-red-500">{errors.fullName.message}</p>}
                       </div>
 
-                      {/* Phone */}
                       <div>
                         <label className={`block text-sm font-medium mb-1.5 ${isDark ? 'text-gray-300' : 'text-gray-700'}`}>
                           Số điện thoại *
@@ -171,7 +164,6 @@ export default function LeadFormSection({ isDark }: LeadFormSectionProps) {
                       </div>
                     </div>
 
-                    {/* Email */}
                     <div>
                       <label className={`block text-sm font-medium mb-1.5 ${isDark ? 'text-gray-300' : 'text-gray-700'}`}>
                         Email (Tùy chọn)
@@ -191,7 +183,6 @@ export default function LeadFormSection({ isDark }: LeadFormSectionProps) {
                     </div>
 
                     <div className="grid grid-cols-1 sm:grid-cols-2 gap-5">
-                      {/* Cat Count */}
                       <div>
                         <label className={`block text-sm font-medium mb-1.5 ${isDark ? 'text-gray-300' : 'text-gray-700'}`}>
                           Số lượng mèo *
@@ -210,7 +201,6 @@ export default function LeadFormSection({ isDark }: LeadFormSectionProps) {
                         {errors.catCount && <p className="mt-1.5 text-sm text-red-500">{errors.catCount.message}</p>}
                       </div>
 
-                      {/* Cat Weight */}
                       <div>
                         <label className={`block text-sm font-medium mb-1.5 ${isDark ? 'text-gray-300' : 'text-gray-700'}`}>
                           Cân nặng trung bình *
@@ -233,7 +223,6 @@ export default function LeadFormSection({ isDark }: LeadFormSectionProps) {
                       </div>
                     </div>
 
-                    {/* Need */}
                     <div>
                       <label className={`block text-sm font-medium mb-1.5 ${isDark ? 'text-gray-300' : 'text-gray-700'}`}>
                         Nhu cầu tư vấn *
@@ -255,7 +244,6 @@ export default function LeadFormSection({ isDark }: LeadFormSectionProps) {
                       {errors.need && <p className="mt-1.5 text-sm text-red-500">{errors.need.message}</p>}
                     </div>
 
-                    {/* Message */}
                     <div>
                       <label className={`block text-sm font-medium mb-1.5 ${isDark ? 'text-gray-300' : 'text-gray-700'}`}>
                         Ghi chú thêm (Tùy chọn)
@@ -274,7 +262,6 @@ export default function LeadFormSection({ isDark }: LeadFormSectionProps) {
                       {errors.message && <p className="mt-1.5 text-sm text-red-500">{errors.message.message}</p>}
                     </div>
 
-                    {/* Submit Button */}
                     <button
                       type="submit"
                       disabled={isSubmitting}

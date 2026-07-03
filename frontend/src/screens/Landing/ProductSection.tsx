@@ -39,7 +39,7 @@ export default function ProductSection({ isDark, onCartUpdate }: ProductSectionP
   };
 
   return (
-    <section id="products" className={`py-20 md:py-28 ${d ? 'bg-[#0e1525]' : 'bg-orange-50/40'}`}>
+    <section id="products" className="py-20 md:py-28">
       <Container>
         <div className="text-center mb-14 reveal">
           <div className={`section-label inline-flex mb-4 ${d ? 'bg-orange-500/10 text-orange-400 border border-orange-500/15' : 'bg-orange-50 text-orange-600 border border-orange-200/60'}`}>
@@ -65,7 +65,6 @@ export default function ProductSection({ isDark, onCartUpdate }: ProductSectionP
               >
                 {isPopular && <div className="h-1 bg-gradient-to-r from-[#ff7a1a] to-[#ff9a4d]" />}
                 <div className="p-6">
-                  {/* Badge + Fav */}
                   <div className="flex items-center justify-between mb-5">
                     {product.badge && (
                       <span className={`inline-flex items-center gap-1 px-2.5 py-1 rounded-full text-[11px] font-bold text-white bg-gradient-to-r ${badgeStyles[product.badge]}`}>
@@ -82,7 +81,6 @@ export default function ProductSection({ isDark, onCartUpdate }: ProductSectionP
                   <h3 className={`text-xl font-bold mb-1.5 ${d ? 'text-white' : 'text-[#172033]'}`}>{product.name}</h3>
                   <p className={`text-sm mb-5 ${d ? 'text-gray-400' : 'text-gray-500'}`}>{product.shortDescription}</p>
 
-                  {/* Price */}
                   <div className="mb-5">
                     <span className={`text-2xl font-extrabold ${isPopular ? 'text-[#ff7a1a]' : d ? 'text-white' : 'text-[#172033]'}`}>
                       {formatPrice(product.price)}
@@ -97,7 +95,6 @@ export default function ProductSection({ isDark, onCartUpdate }: ProductSectionP
                     )}
                   </div>
 
-                  {/* Features */}
                   <ul className="space-y-2 mb-6">
                     {product.features.map((feat, i) => (
                       <li key={i} className="flex items-start gap-2">
@@ -107,7 +104,6 @@ export default function ProductSection({ isDark, onCartUpdate }: ProductSectionP
                     ))}
                   </ul>
 
-                  {/* Button */}
                   <button onClick={() => handleAddToCart(product)} disabled={addedMap[product.id]}
                     className={`w-full py-3 rounded-xl font-semibold text-sm flex items-center justify-center gap-2 transition-all cursor-pointer ${
                       addedMap[product.id] ? 'bg-emerald-500 text-white'

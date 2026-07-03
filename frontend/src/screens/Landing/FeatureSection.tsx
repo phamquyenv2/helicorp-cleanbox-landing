@@ -4,7 +4,6 @@ import { FEATURES } from '../../configs/Constants';
 import Container from '../../components/common/Container';
 import productImg from '../../assets/camera quan sát mèo.webp';
 
-// Import Assets for cards
 import imgHealth from '../../assets/Camera AI theo dõi tình trạng sức khỏe qua phân.webp';
 import gifSeal from '../../assets/Niêm phong tự động.gif';
 import imgMultiCat from '../../assets/Camera AI nhận diện nhiều mèo.webp';
@@ -15,15 +14,15 @@ import gifPad from '../../assets/Nâng cấp lót đáy.gif';
 import imgSensors from '../../assets/PETKIT Purobot Ultra.webp';
 
 const featureImages: string[] = [
-  productImg,   // 0: AI Camera
-  imgHealth,    // 1: Health
-  gifSeal,      // 2: Auto-sealing
-  imgMultiCat,  // 3: Multi-cat
-  imgSensors,   // 4: 20 Sensors
-  imgCabin,     // 5: 70L Cabin
-  imgDeodor,    // 6: Deodorization
-  imgQuiet,     // 7: Quiet
-  gifPad,       // 8: Bottom Pad
+  productImg,
+  imgHealth,
+  gifSeal,
+  imgMultiCat,
+  imgSensors,
+  imgCabin,
+  imgDeodor,
+  imgQuiet,
+  gifPad,
 ];
 
 interface FeatureSectionProps { isDark: boolean; }
@@ -58,7 +57,7 @@ export default function FeatureSection({ isDark }: FeatureSectionProps) {
   }, []);
 
   return (
-    <section id="features" className={`relative py-20 ${d ? 'bg-[#0a0f18]' : 'bg-[#f8f9fa]'}`}>
+    <section id="features" className="relative py-20">
       <Container>
         <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 mb-16 md:mb-24 reveal">
           <div className="max-w-2xl">
@@ -79,7 +78,6 @@ export default function FeatureSection({ isDark }: FeatureSectionProps) {
 
         <div className="relative flex flex-col md:flex-row items-start">
 
-          {/* Left: Scrollable Content */}
           <div className="w-full md:w-1/2 relative z-10 px-4 md:px-0">
             {FEATURES.map((feature, i) => {
               const Icon = iconMap[feature.icon] || Sparkles;
@@ -95,7 +93,6 @@ export default function FeatureSection({ isDark }: FeatureSectionProps) {
                 >
                   <div className={`p-8 md:p-12 rounded-[2.5rem] w-full max-w-[500px] transition-all duration-700 relative ${isActive ? 'scale-100 translate-x-0' : 'scale-95 -translate-x-4'} ${d ? 'bg-[#151c2c]/80 backdrop-blur-xl border border-white/10 shadow-2xl shadow-black/50' : 'bg-white/80 backdrop-blur-xl border border-gray-100 shadow-2xl shadow-gray-200/50'
                     }`}>
-                    {/* Number Badge at Top Right Corner */}
                     <div className={`absolute top-6 right-6 md:top-8 md:right-8 font-mono text-sm font-bold px-3 py-1 rounded-full tracking-widest ${d ? 'bg-[#ff7a1a]/10 text-[#ff7a1a]' : 'bg-orange-50 text-[#e56a10]'}`}>
                       {String(i + 1).padStart(2, '0')}
                     </div>
@@ -113,14 +110,11 @@ export default function FeatureSection({ isDark }: FeatureSectionProps) {
             })}
           </div>
 
-          {/* Right: Sticky Image Container */}
           <div className="hidden md:flex w-1/2 sticky top-0 h-screen items-center justify-center pl-10 lg:pl-20">
             <div className={`relative w-full max-w-[600px] aspect-[4/5] md:aspect-square rounded-[3rem] overflow-hidden shadow-2xl transition-all duration-1000 ${d ? 'bg-[#0e1525] border border-white/5 shadow-black/80' : 'bg-gray-100 border border-gray-200 shadow-gray-300/50'}`}>
 
-              {/* Background Glow */}
               <div className="absolute inset-0 bg-gradient-to-tr from-[#ff7a1a]/20 via-transparent to-orange-500/10 animate-pulse-glow" />
 
-              {/* Images crossfade */}
               {featureImages.map((imgSrc, idx) => {
                 const isProductImg = imgSrc === productImg;
                 return (
@@ -131,9 +125,11 @@ export default function FeatureSection({ isDark }: FeatureSectionProps) {
                     <img
                       src={imgSrc}
                       alt={FEATURES[idx].title}
+                      loading="lazy"
+                      width={600}
+                      height={750}
                       className={`w-full h-full transition-transform duration-1000 ${isProductImg ? 'object-contain mix-blend-screen scale-90 drop-shadow-2xl' : 'object-cover'}`}
                     />
-                    {/* Gradient Overlay for better contrast */}
                     {!isProductImg && (
                       <div className={`absolute inset-0 bg-gradient-to-t ${d ? 'from-[#0e1525]/80 via-transparent' : 'from-gray-100/80 via-transparent'} to-transparent`} />
                     )}

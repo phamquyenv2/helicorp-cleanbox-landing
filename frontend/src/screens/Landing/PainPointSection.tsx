@@ -10,8 +10,7 @@ export default function PainPointSection({ isDark }: PainPointSectionProps) {
   const d = isDark;
   
   return (
-    <section id="pain-points" className="py-20 md:py-28 relative overflow-hidden">
-      {/* Subtle background glow */}
+    <section id="pain-points" className={`py-20 md:py-28 relative overflow-hidden ${d ? 'bg-[#0b101a]' : 'bg-white'}`}>
       <div className={`absolute top-0 right-0 w-[500px] h-[500px] rounded-full blur-[120px] pointer-events-none opacity-50 ${
         d ? 'bg-amber-500/5' : 'bg-amber-200/20'
       }`} />
@@ -45,7 +44,6 @@ export default function PainPointSection({ isDark }: PainPointSectionProps) {
                 }`}
               >
 
-                
                 <div className="relative z-10">
                   <div className={`w-14 h-14 rounded-2xl flex items-center justify-center mb-6 transition-transform duration-300 group-hover:scale-110 ${
                     d ? 'bg-amber-500/10 text-amber-400' : 'bg-amber-50 text-amber-500'

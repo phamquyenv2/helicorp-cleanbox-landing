@@ -1,6 +1,12 @@
-import { Shield, Smartphone, ArrowRight, Camera, PackageCheck, Wifi } from 'lucide-react';
+import { useState, useEffect } from 'react';
+import { ArrowRight, Sparkles, Camera, PackageCheck } from 'lucide-react';
 import Container from '../../components/common/Container';
-import productImg from '../../assets/PETKIT Purobot Ultra.jpg';
+import img1 from '../../assets/PetKit 1.png';
+import img2 from '../../assets/PetKit 2.png';
+import img3 from '../../assets/PetKit 3.png';
+import img4 from '../../assets/PetKit 4.png';
+
+const IMAGES = [img1, img2, img3, img4];
 
 interface HeroSectionProps {
   isDark: boolean;
@@ -8,139 +14,127 @@ interface HeroSectionProps {
 }
 
 export default function HeroSection({ isDark, onTrack }: HeroSectionProps) {
+  const [currentImageIdx, setCurrentImageIdx] = useState(0);
+
+  useEffect(() => {
+    const timer = setInterval(() => {
+      setCurrentImageIdx((prev) => (prev + 1) % IMAGES.length);
+    }, 4000);
+    return () => clearInterval(timer);
+  }, []);
+
   const scrollTo = (id: string) => {
     document.querySelector(id)?.scrollIntoView({ behavior: 'smooth' });
   };
   const d = isDark;
 
   return (
-    <section id="hero" className="relative overflow-hidden min-h-[95vh] flex items-center pt-24 pb-16 md:pt-28 md:pb-20 lg:pt-32 lg:pb-24">
-      {/* Animated ambient background & particles */}
-      <div className="absolute inset-0 pointer-events-none overflow-hidden">
-        <div className={`absolute top-0 right-[10%] w-[500px] h-[500px] rounded-full blur-[120px] animate-pulse-glow ${d ? 'bg-orange-500/[0.06]' : 'bg-orange-200/30'
-          }`} />
-        <div className={`absolute bottom-[-10%] left-[5%] w-[400px] h-[400px] rounded-full blur-[100px] animate-float ${d ? 'bg-teal-500/[0.04]' : 'bg-teal-200/20'
-          }`} />
+    <section id="hero" className="relative min-h-[100dvh] flex items-center pt-24 pb-16 md:pt-28 md:pb-20 overflow-hidden">
+      <div className="absolute inset-0 pointer-events-none z-0 overflow-hidden">
+        <div className="absolute inset-0 opacity-[0.02] mix-blend-overlay" style={{ backgroundImage: 'url("data:image/svg+xml,%3Csvg viewBox=%220 0 200 200%22 xmlns=%22http://www.w3.org/2000/svg%22%3E%3Cfilter id=%22noiseFilter%22%3E%3CfeTurbulence type=%22fractalNoise%22 baseFrequency=%220.65%22 numOctaves=%223%22 stitchTiles=%22stitch%22/%3E%3C/filter%3E%3Crect width=%22100%25%22 height=%22100%25%22 filter=%22url(%23noiseFilter)%22/%3E%3C/svg%3E")' }}></div>
 
-        {/* Floating particles (Stars/Dust) */}
-        <div className="absolute top-[20%] left-[20%] w-2 h-2 rounded-full bg-orange-400/50 animate-float blur-[1px]" />
-        <div className="absolute top-[40%] right-[30%] w-1.5 h-1.5 rounded-full bg-teal-400/50 animate-float-delayed blur-[1px]" />
-        <div className="absolute bottom-[30%] left-[40%] w-3 h-3 rounded-full bg-amber-300/40 animate-pulse blur-[2px]" />
-        <div className="absolute top-[15%] right-[15%] w-2 h-2 rounded-full bg-orange-300/60 animate-float blur-[1px]" style={{ animationDelay: '1s' }} />
+        <div className={`absolute top-0 right-[-10%] w-[60vw] h-[60vw] rounded-full blur-[120px] opacity-40 animate-pulse-glow ${d ? 'bg-[#ff7a1a]/15' : 'bg-orange-300/30'}`} />
+        <div className={`absolute bottom-[-10%] left-[-10%] w-[50vw] h-[50vw] rounded-full blur-[100px] opacity-30 ${d ? 'bg-teal-500/10' : 'bg-teal-200/40'}`} />
       </div>
 
-      <Container className="relative z-10">
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-10 lg:gap-16 items-center">
+      <Container className="relative z-10 w-full">
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-8 items-center">
 
-          {/* Left: Content */}
-          <div className="text-center lg:text-left order-2 lg:order-1">
-            {/* Headline */}
-            <h1 className={`text-3xl sm:text-4xl lg:text-[2.75rem] xl:text-[3rem] font-extrabold leading-[1.15] tracking-tight mb-5 ${d ? 'text-white' : 'text-[#172033]'}`}>
-              <span className="block text-xl sm:text-2xl lg:text-[1.75rem] text-[#ff7a1a] mb-2 lg:mb-3 tracking-wide">PETKIT PUROBOT ULTRA</span>
-              Máy dọn vệ sinh mèo tự động cho nhà sạch thơm mỗi ngày
+          <div className="lg:col-span-7 flex flex-col justify-center text-center lg:text-left order-2 lg:order-1 pt-8 lg:pt-0">
+
+            <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full mb-6 mx-auto lg:mx-0 border backdrop-blur-sm w-fit animate-fade-up
+              bg-white/60 border-gray-200 shadow-sm dark:bg-white/5 dark:border-white/10 dark:shadow-none">
+              <Sparkles size={14} className="text-[#ff7a1a]" />
+              <span className={`text-[11px] font-bold tracking-[0.2em] uppercase ${d ? 'text-gray-300' : 'text-gray-700'}`}>
+                Thế hệ mới 2026
+              </span>
+            </div>
+
+            <h1 className={`text-[2.75rem] sm:text-6xl lg:text-[4.5rem] xl:text-[5.5rem] font-black tracking-tighter leading-[1.02] mb-6 animate-fade-up ${d ? 'text-white' : 'text-[#111827]'}`} style={{ animationDelay: '0.1s' }}>
+              <span className="block text-[#ff7a1a] mb-1 sm:mb-2 drop-shadow-sm">PETKIT</span>
+              <span className="block opacity-90">Purobot Ultra.</span>
             </h1>
 
-            {/* Description */}
-            <p className={`text-base sm:text-lg leading-relaxed mb-8 max-w-[520px] mx-auto lg:mx-0 ${d ? 'text-gray-400' : 'text-gray-500'}`}>
-              Đột phá công nghệ với Camera AI thông minh và hệ thống tự động niêm phong túi rác. Không chạm tay, không lọt mùi, theo dõi sức khỏe boss qua điện thoại.
+            <p className={`text-lg sm:text-xl lg:text-2xl leading-relaxed max-w-[34rem] mx-auto lg:mx-0 mb-10 animate-fade-up font-medium ${d ? 'text-gray-400' : 'text-gray-600'}`} style={{ animationDelay: '0.2s' }}>
+              Kỷ nguyên mới của sự sạch sẽ. Tích hợp Camera AI giám sát và hệ thống đóng gói rác hoàn toàn tự động đầu tiên trên thế giới.
             </p>
 
-            {/* CTA Buttons */}
-            <div className="flex flex-col sm:flex-row gap-3 justify-center lg:justify-start mb-8">
+            <div className="flex flex-col sm:flex-row gap-4 justify-center lg:justify-start w-full sm:w-auto animate-fade-up" style={{ animationDelay: '0.3s' }}>
               <button
                 id="hero-cta-primary"
                 onClick={() => { scrollTo('#lead-form'); onTrack('cta_click', { eventName: 'hero_register_click', section: 'hero' }); }}
-                className="group inline-flex items-center justify-center gap-2 px-6 py-3.5 bg-[#ff7a1a] hover:bg-[#e56a10] text-white font-bold text-[15px] rounded-xl shadow-lg shadow-orange-500/20 hover:shadow-orange-500/40 active:scale-[0.97] transition-all cursor-pointer relative overflow-hidden"
+                className="group flex items-center justify-center gap-3 px-8 py-4 bg-[#ff7a1a] hover:bg-[#e56a10] text-white font-bold text-lg rounded-full shadow-xl shadow-orange-500/25 active:scale-[0.98] transition-all overflow-hidden relative"
               >
-                {/* Shiny sweep effect on hover */}
-                <div className="absolute inset-0 -translate-x-full bg-gradient-to-r from-transparent via-white/20 to-transparent group-hover:animate-[shimmer_1.5s_infinite]" />
-                <span className="relative z-10">Nhận tư vấn miễn phí</span>
-                <ArrowRight size={16} className="relative z-10 group-hover:translate-x-1 transition-transform" />
+                <div className="absolute inset-0 -translate-x-full bg-gradient-to-r from-transparent via-white/25 to-transparent group-hover:animate-[shimmer_1.5s_infinite]" />
+                <span className="relative z-10">Nhận tư vấn ngay</span>
+                <ArrowRight size={20} className="relative z-10 group-hover:translate-x-1.5 transition-transform" />
               </button>
               <button
                 id="hero-cta-secondary"
                 onClick={() => { scrollTo('#story'); onTrack('cta_click', { eventName: 'hero_how_it_works', section: 'hero' }); }}
-                className={`inline-flex items-center justify-center px-6 py-3.5 rounded-xl font-bold text-[15px] border-2 transition-all active:scale-[0.97] cursor-pointer ${d
-                  ? 'border-white/12 text-white hover:bg-white/[0.04]'
-                  : 'border-gray-200 text-[#172033] hover:border-gray-300 hover:bg-white'
-                  }`}
+                className={`flex items-center justify-center px-8 py-4 rounded-full font-bold text-lg transition-all active:scale-[0.98] border-2
+                  ${d ? 'border-white/15 hover:bg-white/5 text-white' : 'border-gray-200 hover:border-gray-300 hover:bg-white text-gray-900 shadow-sm'}`}
               >
                 Xem cách hoạt động
               </button>
             </div>
-
-            {/* Feature badges */}
-            <div className="flex flex-wrap gap-2.5 justify-center lg:justify-start">
-              {[
-                { icon: Camera, label: 'Camera AI góc rộng' },
-                { icon: PackageCheck, label: 'Niêm phong túi tự động' },
-                { icon: Shield, label: '20 Cảm biến an toàn' },
-              ].map(({ icon: Icon, label }, idx) => (
-                <div key={label} className={`flex items-center gap-2 px-3 py-1.5 rounded-lg text-[13px] font-medium transition-transform hover:-translate-y-0.5 ${d
-                  ? 'bg-white/[0.04] text-gray-300 border border-white/[0.06] hover:bg-white/[0.08]'
-                  : 'bg-white/80 text-gray-600 border border-gray-200/80 shadow-sm hover:shadow-md'
-                  }`}>
-                  <Icon size={13} className="text-[#ff7a1a]" />
-                  {label}
-                </div>
-              ))}
-            </div>
           </div>
 
-          {/* Right: Product Visual */}
-          <div className="flex justify-center lg:justify-end order-1 lg:order-2">
-            <div className="relative w-full max-w-[460px] lg:max-w-[540px]">
+          <div className="lg:col-span-5 relative order-1 lg:order-2 flex justify-center animate-fade-up" style={{ animationDelay: '0.2s' }}>
+            <div className="relative w-full max-w-[420px] lg:max-w-[500px]">
 
-              {/* Subtle ambient glow behind the container */}
-              <div className={`absolute -inset-6 rounded-[3rem] blur-[50px] z-0 animate-pulse-glow opacity-60 ${d ? 'bg-orange-500/20' : 'bg-orange-400/30'
-                }`} />
+              <div className={`relative z-10 w-full aspect-square md:aspect-[4/5] rounded-[2.5rem] overflow-hidden group shadow-2xl transition-transform duration-700 hover:scale-[1.02]
+                ${d ? 'bg-zinc-900 border border-white/10 shadow-black/60' : 'bg-gray-100 border border-black/5 shadow-xl shadow-gray-200/80'}`}>
 
-              {/* Abstract decorative background typography (Hidden on small screens) */}
-              <div className="absolute top-[5%] right-full mr-[-4rem] z-0 select-none pointer-events-none origin-bottom-right -rotate-90 hidden lg:block opacity-70">
-                <span className={`text-[7rem] font-black uppercase tracking-tighter leading-none ${d ? 'text-white/[0.02]' : 'text-gray-900/[0.03]'}`}>
-                  PETKIT
-                </span>
-              </div>
-              <div className="absolute bottom-[2%] left-full ml-[-2rem] z-0 select-none pointer-events-none origin-top-left -rotate-90 hidden lg:block opacity-70">
-                <span className={`text-[6rem] font-black uppercase tracking-tighter leading-none ${d ? 'text-white/[0.02]' : 'text-gray-900/[0.03]'}`}>
-                  ULTRA
-                </span>
-              </div>
+                {IMAGES.map((img, idx) => (
+                  <img
+                    key={idx}
+                    src={img}
+                    alt={`PETKIT Purobot Ultra ${idx + 1}`}
+                    width={500}
+                    height={625}
+                    fetchpriority={idx === 0 ? "high" : "auto"}
+                    loading={idx === 0 ? "eager" : "lazy"}
+                    className={`absolute inset-0 w-full h-full object-cover object-center transition-all duration-[1.5s] ease-in-out ${idx === currentImageIdx ? 'opacity-100 scale-100 z-10' : 'opacity-0 scale-[1.08] z-0'} group-hover:scale-[1.04]`}
+                  />
+                ))}
 
-              {/* Framed product image */}
-              <div className={`relative z-10 w-full aspect-square sm:aspect-auto rounded-[2.5rem] lg:rounded-[3rem] overflow-hidden shadow-2xl group ${d ? 'border-4 border-white/10 shadow-black/50' : 'border-[6px] border-white/70 shadow-orange-900/10'
-                }`}>
-
-                {/* Sleek Product Name Overlay */}
-                <div className="absolute top-6 left-8 sm:top-8 sm:left-10 z-20 animate-fade-up">
-                  <div className="flex flex-col">
-                    <span className={`text-[11px] sm:text-[13px] font-bold tracking-[0.2em] uppercase mb-1 ${d ? 'text-orange-400' : 'text-[#ff7a1a]'}`}>
-                      New Release
-                    </span>
-                    <h2 className={`text-2xl sm:text-3xl font-black tracking-tight ${d ? 'text-white' : 'text-gray-900'}`}>
-                      PETKIT
-                    </h2>
-                    <h3 className={`text-lg sm:text-xl font-bold tracking-wide ${d ? 'text-gray-300' : 'text-gray-700'}`}>
-                      Purobot Ultra
-                    </h3>
+                <div className="absolute inset-0 bg-gradient-to-tr from-black/30 via-transparent to-black/10 pointer-events-none mix-blend-overlay z-20" />
+                
+                <div className="absolute top-6 left-6 z-30 animate-float-delayed hover:scale-105 transition-transform cursor-default">
+                  <div className={`flex items-center gap-2.5 px-3.5 py-2 rounded-full backdrop-blur-md border shadow-lg ${d ? 'bg-black/40 border-white/10' : 'bg-white/70 border-white'}`}>
+                    <div className={`p-1.5 rounded-full ${d ? 'bg-orange-500/20' : 'bg-orange-100'}`}>
+                      <Camera size={14} className="text-[#ff7a1a]" />
+                    </div>
+                    <span className={`text-xs font-bold ${d ? 'text-white' : 'text-gray-900'}`}>Camera AI 360°</span>
                   </div>
                 </div>
 
-                <img
-                  src={productImg}
-                  alt="PETKIT Purobot Ultra - Máy dọn vệ sinh mèo tự động"
-                  width={600}
-                  height={600}
-                  className="w-full h-full object-cover scale-[1.01] transition-transform duration-1000 group-hover:scale-[1.06]"
-                  loading="eager"
-                />
+                <div className="absolute bottom-14 right-6 z-30 animate-float hover:scale-105 transition-transform cursor-default">
+                  <div className={`flex items-center gap-2.5 px-3.5 py-2 rounded-full backdrop-blur-md border shadow-lg ${d ? 'bg-black/40 border-white/10' : 'bg-white/70 border-white'}`}>
+                    <div className={`p-1.5 rounded-full ${d ? 'bg-orange-500/20' : 'bg-orange-100'}`}>
+                      <PackageCheck size={14} className="text-[#ff7a1a]" />
+                    </div>
+                    <span className={`text-xs font-bold ${d ? 'text-white' : 'text-gray-900'}`}>Tự đóng gói rác</span>
+                  </div>
+                </div>
 
-                {/* Gradient overlay for grounding and depth */}
-                <div className="absolute inset-0 bg-gradient-to-t from-black/30 via-black/5 to-transparent pointer-events-none mix-blend-overlay" />
+                <div className="absolute bottom-6 left-0 right-0 z-30 flex justify-center gap-2">
+                  {IMAGES.map((_, idx) => (
+                    <button
+                      key={idx}
+                      onClick={() => setCurrentImageIdx(idx)}
+                      className={`h-1.5 rounded-full transition-all duration-500 ${idx === currentImageIdx ? 'w-6 bg-white' : 'w-2 bg-white/40 hover:bg-white/70'}`}
+                      aria-label={`Go to slide ${idx + 1}`}
+                    />
+                  ))}
+                </div>
+
               </div>
 
             </div>
           </div>
+
         </div>
       </Container>
     </section>

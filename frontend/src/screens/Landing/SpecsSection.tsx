@@ -11,7 +11,7 @@ interface SpecsSectionProps { isDark: boolean; }
 export default function SpecsSection({ isDark }: SpecsSectionProps) {
   const d = isDark;
   return (
-    <section id="specs" className={`py-20 md:py-28 relative overflow-hidden ${d ? 'bg-[#0b101a]' : 'bg-[#fff8f1]'}`}>
+    <section id="specs" className={`py-20 md:py-28 relative overflow-hidden ${d ? 'bg-[#0b101a]' : 'bg-white'}`}>
       <Container>
         <div className="text-center mb-14 reveal">
           <div className={`section-label inline-flex mb-4 ${d ? 'bg-orange-500/10 text-orange-400 border border-orange-500/15' : 'bg-orange-50 text-orange-600 border border-orange-200/60'}`}>
@@ -37,7 +37,6 @@ export default function SpecsSection({ isDark }: SpecsSectionProps) {
                     : 'bg-gradient-to-br from-orange-50/50 to-white border border-orange-200 shadow-md shadow-orange-500/5'
                 }`}
               >
-                {/* Decorative Background Icon for all cards */}
                 <div className={`absolute -right-6 -bottom-6 opacity-[0.03] w-48 h-48 rotate-12 transition-transform duration-700 group-hover:rotate-0 group-hover:scale-110 pointer-events-none ${d ? 'text-orange-300' : 'text-orange-600'}`}>
                    <Icon size={192} />
                 </div>

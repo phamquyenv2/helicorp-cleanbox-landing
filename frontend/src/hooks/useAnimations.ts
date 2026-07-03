@@ -1,10 +1,5 @@
 import { useEffect, useRef } from 'react';
 
-/**
- * Intersection Observer hook for scroll-reveal animations.
- * Adds 'visible' class to elements with 'reveal', 'reveal-left', 'reveal-right', 'reveal-scale' classes.
- * Uses MutationObserver and WeakSet to handle dynamically added elements and Vite HMR properly.
- */
 export function useScrollReveal() {
   useEffect(() => {
     const observer = new IntersectionObserver(
@@ -30,10 +25,8 @@ export function useScrollReveal() {
       });
     };
 
-    // Initial observation
     observeElements();
 
-    // Watch for dynamically added elements (e.g. via HMR or React Router)
     const mutationObserver = new MutationObserver(() => {
       observeElements();
     });
@@ -47,9 +40,6 @@ export function useScrollReveal() {
   }, []);
 }
 
-/**
- * Scroll tracking hook for milestone events (25%, 50%, 75%, 100%).
- */
 export function useScrollTracking(onMilestone: (percent: number) => void) {
   const reached = useRef(new Set<number>());
 

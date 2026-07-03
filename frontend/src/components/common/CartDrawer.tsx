@@ -49,7 +49,6 @@ export default function CartDrawer({ isOpen, onClose, cart, onCartUpdate, isDark
     <div className="fixed inset-0 z-[60] overflow-hidden">
       <div className="absolute inset-0 bg-black/50 backdrop-blur-sm" onClick={onClose} />
       <div className={`absolute top-0 right-0 z-[70] h-full w-full max-w-md ${d ? 'bg-[#101827]' : 'bg-white'} shadow-2xl flex flex-col`}>
-        {/* Header */}
         <div className={`flex items-center justify-between px-6 py-5 border-b ${d ? 'border-white/10' : 'border-gray-100'}`}>
           <div className="flex items-center gap-3">
             <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-[#ff7a1a] to-[#ff9a4d] flex items-center justify-center shadow-lg shadow-orange-500/20">
@@ -65,7 +64,6 @@ export default function CartDrawer({ isOpen, onClose, cart, onCartUpdate, isDark
           </button>
         </div>
 
-        {/* Items */}
         <div className="flex-1 overflow-y-auto px-6 py-4">
           {cart.length === 0 ? (
             <div className="flex flex-col items-center justify-center h-full text-center">
@@ -102,7 +100,6 @@ export default function CartDrawer({ isOpen, onClose, cart, onCartUpdate, isDark
           )}
         </div>
 
-        {/* Footer */}
         {cart.length > 0 && (
           <div className={`px-6 py-5 border-t ${d ? 'border-white/10' : 'border-gray-100'}`}>
             <button onClick={handleClear} className={`w-full text-center text-xs font-medium mb-4 cursor-pointer ${d ? 'text-gray-400 hover:text-red-400' : 'text-gray-500 hover:text-red-500'}`}>Xóa toàn bộ giỏ hàng</button>

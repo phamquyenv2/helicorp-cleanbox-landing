@@ -19,7 +19,6 @@ export default function ChatbotWidget({ isDark }: ChatbotWidgetProps) {
   const inputRef = useRef<HTMLInputElement>(null);
   const d = isDark;
 
-  // Track scroll for Scroll to Top button
   useEffect(() => {
     const handleScroll = () => {
       setShowScrollTop(window.scrollY > 500);
@@ -32,17 +31,14 @@ export default function ChatbotWidget({ isDark }: ChatbotWidgetProps) {
     window.scrollTo({ top: 0, behavior: 'smooth' });
   };
 
-  // Load chat history
   useEffect(() => {
     setMessages(getChatHistory());
   }, []);
 
-  // Auto-scroll
   useEffect(() => {
     messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' });
   }, [messages, isTyping]);
 
-  // Focus input when opened
   useEffect(() => {
     if (isOpen) inputRef.current?.focus();
   }, [isOpen]);
@@ -62,7 +58,6 @@ export default function ChatbotWidget({ isDark }: ChatbotWidgetProps) {
     setInput('');
     setIsTyping(true);
 
-    // Simulate delay for natural feel
     setTimeout(() => {
       const botReply = getLocalChatReply(text);
       const withReply = [...updated, botReply];
@@ -79,11 +74,9 @@ export default function ChatbotWidget({ isDark }: ChatbotWidgetProps) {
 
   return (
     <>
-      {/* Chat Window */}
       <div className={`fixed bottom-20 left-4 right-4 sm:left-auto sm:right-6 z-50 w-auto sm:w-[380px] max-h-[min(520px,calc(100dvh-6rem))] rounded-2xl shadow-2xl flex flex-col overflow-hidden transition-all duration-300 origin-bottom-right ${
         isOpen ? 'scale-100 opacity-100' : 'scale-90 opacity-0 pointer-events-none'
       } ${d ? 'bg-[#172033] border border-white/10' : 'bg-white border border-gray-200'}`}>
-        {/* Header */}
         <div className="flex items-center justify-between px-5 py-4 bg-gradient-to-r from-[#ff7a1a] to-[#ff9a4d] text-white">
           <div className="flex items-center gap-3">
             <div className="w-9 h-9 rounded-full bg-white/20 flex items-center justify-center">
@@ -99,15 +92,12 @@ export default function ChatbotWidget({ isDark }: ChatbotWidgetProps) {
           </button>
         </div>
 
-        {/* Messages */}
         <div className="flex-1 overflow-y-auto px-4 py-4 space-y-3 min-h-[240px]">
-          {/* Welcome */}
           {messages.length === 0 && (
             <div className="chat-bubble-enter">
               <div className={`rounded-2xl rounded-tl-sm px-4 py-3 max-w-[85%] ${d ? 'bg-white/10 text-gray-200' : 'bg-gray-100 text-gray-700'}`}>
                 <p className="text-sm">Xin chào! 👋 Mình là trợ lý CleanBox. Bạn muốn hỏi gì về máy dọn vệ sinh mèo tự động?</p>
               </div>
-              {/* Suggestions */}
               <div className="mt-3 flex flex-wrap gap-2">
                 {CHATBOT_SUGGESTIONS.slice(0, 4).map((q, i) => (
                   <button
@@ -146,7 +136,6 @@ export default function ChatbotWidget({ isDark }: ChatbotWidgetProps) {
             </div>
           ))}
 
-          {/* Typing indicator */}
           {isTyping && (
             <div className="flex items-center gap-2 chat-bubble-enter">
               <div className={`w-7 h-7 rounded-full flex items-center justify-center ${d ? 'bg-[#ff7a1a]/20 text-[#ff9a4d]' : 'bg-orange-100 text-[#ff7a1a]'}`}>
@@ -164,7 +153,6 @@ export default function ChatbotWidget({ isDark }: ChatbotWidgetProps) {
           <div ref={messagesEndRef} />
         </div>
 
-        {/* Input */}
         <form onSubmit={handleSubmit} className={`px-4 py-3 border-t ${d ? 'border-white/10' : 'border-gray-100'}`}>
           <div className={`flex items-center gap-2 rounded-xl px-3 py-1 ${d ? 'bg-white/5' : 'bg-gray-50'}`}>
             <input
@@ -189,9 +177,7 @@ export default function ChatbotWidget({ isDark }: ChatbotWidgetProps) {
         </form>
       </div>
 
-      {/* Floating Action Buttons Container */}
       <div className="fixed bottom-4 right-4 sm:right-6 z-50 flex flex-col items-center gap-3 pointer-events-none">
-        {/* Scroll To Top Button */}
         <button
           onClick={scrollToTop}
           className={`w-11 h-11 rounded-full flex items-center justify-center bg-[#ff7a1a] text-white shadow-lg border border-orange-400 transition-all duration-300 pointer-events-auto hover:bg-[#e56a10] hover:-translate-y-1 ${
@@ -202,7 +188,6 @@ export default function ChatbotWidget({ isDark }: ChatbotWidgetProps) {
           <ChevronUp size={22} />
         </button>
 
-        {/* Chat FAB Button */}
         <button
           id="chatbot-toggle"
           onClick={() => setIsOpen(!isOpen)}
