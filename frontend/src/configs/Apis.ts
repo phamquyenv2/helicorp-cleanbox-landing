@@ -46,7 +46,6 @@ export async function getProducts(): Promise<ApiResponse> {
   return request('/api/products');
 }
 
-/* ===== Local chatbot fallback (keyword matching) ===== */
 const CHAT_RULES: { keywords: string[]; reply: string }[] = [
   {
     keywords: ['an toàn', 'kẹt', 'mèo con', 'nguy hiểm'],

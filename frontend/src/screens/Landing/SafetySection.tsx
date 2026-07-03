@@ -1,14 +1,14 @@
-import { ShieldCheck, Eye, Scale, Lock, MonitorCheck } from 'lucide-react';
+import { ShieldCheck, Eye, Scale, Trash2, Cpu } from 'lucide-react';
 import { SAFETY_SENSORS } from '../../configs/Constants';
 import Container from '../../components/common/Container';
 
 interface SafetySectionProps { isDark: boolean; }
-const sensorIcons = [Eye, Scale, Lock, MonitorCheck];
+const sensorIcons = [Eye, Scale, Trash2, Cpu];
 
 export default function SafetySection({ isDark }: SafetySectionProps) {
   const d = isDark;
   return (
-    <section id="safety" className="py-20 md:py-28">
+    <section id="safety" className={`py-20 md:py-28 ${d ? 'bg-[#0b101a]' : 'bg-white'}`}>
       <Container>
         <div className="text-center mb-14 reveal">
           <div className={`section-label inline-flex mb-4 ${d ? 'bg-emerald-500/10 text-emerald-400 border border-emerald-500/15' : 'bg-emerald-50 text-emerald-600 border border-emerald-200/60'}`}>
@@ -23,7 +23,6 @@ export default function SafetySection({ isDark }: SafetySectionProps) {
           </p>
         </div>
 
-        {/* Center icon */}
         <div className="flex justify-center mb-12 reveal-scale">
           <div className={`w-28 h-28 rounded-3xl flex items-center justify-center ${
             d ? 'bg-[#151c2c] border border-white/6 shadow-xl' : 'bg-white border border-gray-100 shadow-xl'
@@ -34,7 +33,6 @@ export default function SafetySection({ isDark }: SafetySectionProps) {
           </div>
         </div>
 
-        {/* Sensor cards */}
         <div className="grid sm:grid-cols-2 gap-5 max-w-3xl mx-auto stagger-children">
           {SAFETY_SENSORS.map((sensor, i) => {
             const Icon = sensorIcons[i] || ShieldCheck;

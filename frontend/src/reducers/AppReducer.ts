@@ -1,6 +1,5 @@
 import type { CartItem, Product, Toast, ChatMessage } from '../configs/Types';
 
-/* ===== LocalStorage Keys ===== */
 const KEYS = {
   theme: 'cleanbox_theme',
   sessionId: 'cleanbox_session_id',
@@ -10,7 +9,6 @@ const KEYS = {
   chatHistory: 'cleanbox_chat_history',
 };
 
-/* ===== Generic helpers ===== */
 function getItem<T>(key: string, fallback: T): T {
   try {
     const raw = localStorage.getItem(key);
@@ -24,7 +22,6 @@ function setItem<T>(key: string, value: T): void {
   localStorage.setItem(key, JSON.stringify(value));
 }
 
-/* ===== Theme ===== */
 export function getTheme(): 'light' | 'dark' {
   return (localStorage.getItem(KEYS.theme) as 'light' | 'dark') || 'light';
 }
@@ -44,7 +41,6 @@ export function initTheme(): 'light' | 'dark' {
   return saved;
 }
 
-/* ===== Session ID ===== */
 export function getSessionId(): string {
   let id = localStorage.getItem(KEYS.sessionId);
   if (!id) {
@@ -54,7 +50,6 @@ export function getSessionId(): string {
   return id;
 }
 
-/* ===== Cart ===== */
 export function getCart(): CartItem[] {
   return getItem<CartItem[]>(KEYS.cart, []);
 }
@@ -103,7 +98,6 @@ export function getCartCount(cart: CartItem[]): number {
   return cart.reduce((sum, item) => sum + item.quantity, 0);
 }
 
-/* ===== Favorites ===== */
 export function getFavorites(): string[] {
   return getItem<string[]>(KEYS.favorites, []);
 }
@@ -124,7 +118,6 @@ export function isFavorite(productId: string): boolean {
   return getFavorites().includes(productId);
 }
 
-/* ===== Recently Viewed ===== */
 export function getRecentlyViewed(): string[] {
   return getItem<string[]>(KEYS.recentlyViewed, []);
 }
@@ -137,7 +130,6 @@ export function addRecentlyViewed(productId: string): string[] {
   return trimmed;
 }
 
-/* ===== Chat History ===== */
 export function getChatHistory(): ChatMessage[] {
   return getItem<ChatMessage[]>(KEYS.chatHistory, []);
 }
@@ -146,7 +138,6 @@ export function saveChatHistory(messages: ChatMessage[]): void {
   setItem(KEYS.chatHistory, messages);
 }
 
-/* ===== Toast Helper ===== */
 let toastCallback: ((toast: Toast) => void) | null = null;
 
 export function setToastCallback(cb: (toast: Toast) => void): void {
@@ -164,7 +155,6 @@ export function showToast(type: Toast['type'], message: string, duration = 3000)
   }
 }
 
-/* ===== Format Currency ===== */
 export function formatPrice(price: number): string {
   return new Intl.NumberFormat('vi-VN').format(price) + 'đ';
 }

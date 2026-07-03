@@ -26,18 +26,20 @@ export default function FAQSection({ isDark }: FAQSectionProps) {
           {FAQ_DATA.map((faq, i) => {
             const isOpen = openIndex === i;
             return (
-              <div key={i} className={`reveal rounded-2xl overflow-hidden transition-all ${
-                d ? 'bg-[#151c2c] border border-white/6' : 'bg-white border border-gray-100 shadow-sm'
-              } ${isOpen ? (d ? 'ring-1 ring-orange-500/20' : 'ring-1 ring-orange-300/30') : ''}`}>
-                <button onClick={() => setOpenIndex(isOpen ? null : i)}
-                  className="w-full flex items-center justify-between px-5 py-4 text-left cursor-pointer group" aria-expanded={isOpen}>
-                  <span className={`font-semibold text-[15px] pr-4 transition-colors ${isOpen ? 'text-[#ff7a1a]' : d ? 'text-white' : 'text-[#172033]'}`}>
-                    {faq.question}
-                  </span>
-                  <ChevronDown size={18} className={`shrink-0 transition-transform duration-300 ${isOpen ? 'rotate-180 text-[#ff7a1a]' : d ? 'text-gray-500' : 'text-gray-400'}`} />
-                </button>
-                <div className={`overflow-hidden transition-all duration-300 ${isOpen ? 'max-h-96 opacity-100' : 'max-h-0 opacity-0'}`}>
-                  <div className={`px-5 pb-5 text-sm leading-relaxed ${d ? 'text-gray-400' : 'text-gray-500'}`}>{faq.answer}</div>
+              <div key={i} className="reveal">
+                <div className={`rounded-2xl overflow-hidden transition-all ${
+                  d ? 'bg-[#151c2c] border border-white/6' : 'bg-white border border-gray-100 shadow-sm'
+                } ${isOpen ? (d ? 'ring-1 ring-orange-500/20' : 'ring-1 ring-orange-300/30') : ''}`}>
+                  <button onClick={() => setOpenIndex(isOpen ? null : i)}
+                    className="w-full flex items-center justify-between px-5 py-4 text-left cursor-pointer group" aria-expanded={isOpen}>
+                    <span className={`font-semibold text-[15px] pr-4 transition-colors ${isOpen ? 'text-[#ff7a1a]' : d ? 'text-white' : 'text-[#172033]'}`}>
+                      {faq.question}
+                    </span>
+                    <ChevronDown size={18} className={`shrink-0 transition-transform duration-300 ${isOpen ? 'rotate-180 text-[#ff7a1a]' : d ? 'text-gray-500' : 'text-gray-400'}`} />
+                  </button>
+                  <div className={`overflow-hidden transition-all duration-300 ${isOpen ? 'max-h-96 opacity-100' : 'max-h-0 opacity-0'}`}>
+                    <div className={`px-5 pb-5 text-sm leading-relaxed ${d ? 'text-gray-400' : 'text-gray-500'}`}>{faq.answer}</div>
+                  </div>
                 </div>
               </div>
             );
